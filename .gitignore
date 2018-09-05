@@ -1,0 +1,16 @@
+.env
+/bootstrap/*
+/public/*
+/storage/*
+/vendor/*
+/update servicos os.txt
+/update_v2_to_v3.sql
+/banco.sql
+/docs/modelagem.mwb.bak
+/docs/modelagem.mwb
+/instruções.txt
+/docs/script.sql
+/LICENSE.txt
+/nbproject/project.properties
+/README.md
+/nbproject/project.xml
