@@ -61,5 +61,15 @@ class Equipamentos_model extends CI_Model {
     function count($table) {
         return $this->db->count_all($table);
     }
+    
+    function getEquipamentosDropdown() {
+        $this->db->select('idEquipamentos,equipamento');
+        $results = $this->db->get('equipamentos')->result();
+        $list = array();
+        foreach ($results as $result) {
+            $list[$result->idEquipamentos] = $result->equipamento;
+        }
+        return $list;
+    }
 
 }

@@ -94,6 +94,12 @@ class Os extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+        
+        $this->load->model('marcas_model');
+        $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
+        
+        $this->load->model('equipamentos_model');
+        $this->data['equipamentos'] = $this->equipamentos_model->getEquipamentosDropdown();
 
         if ($this->form_validation->run('os') == false) {
             $this->data['custom_error'] = (validation_errors() ? true : false);
