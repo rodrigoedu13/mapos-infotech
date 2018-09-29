@@ -12,14 +12,15 @@ class Modelos_model extends CI_Model {
     }
 
     function getModelos() {
-//        $this->db->select('modelos.idModelos', 'modelos.modelos', 'modelos.cadastro', 'modelos.situacao', 'marcas.marcas_id');
-        $this->db->order_by('idModelos', 'desc');
+        $this->db->select('modelos.idModelos, modelos.modelos, modelos.cadastro, modelos.situacao, marcas.marca');
+        //$this->db->order_by('idModelos', 'desc');
         $this->db->join('marcas','marcas.idMarcas = modelos.marcas_id');
         $query = $this->db->get('modelos');
         return $query->result();
     }
 
     function getById($id) {
+        $this->db->select('modelos.idModelos, modelos.modelos, modelos.cadastro, modelos.situacao, marcas.marca, marcas.idMarcas, modelos.marcas_id');
         $this->db->where('idModelos', $id);
         $this->db->join('marcas','marcas.idMarcas = modelos.marcas_id');
         $this->db->limit(1);

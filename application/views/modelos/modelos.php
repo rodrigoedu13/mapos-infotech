@@ -71,7 +71,7 @@
                         }
                         ?>
                         <tr>
-                            <td><?= $r->idMarcas; ?></td>
+                            <td><?= $r->idModelos; ?></td>
                             <td><?= $r->marca; ?></td>
                             <td><?= $r->modelos; ?></td>
                             <td><?= $dataCadastro; ?></td>
