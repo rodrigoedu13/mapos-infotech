@@ -16,6 +16,7 @@
                 </div>
             </div>
             <div class="widget-content" id="printOs">
+                <page size="A4">
                 <div class="invoice-content">
                     <div class="invoice-head" style="margin-bottom: 0">
 
@@ -170,6 +171,7 @@
                     
               
                 </div>
+                    </page>
             </div>
         </div>
     </div>

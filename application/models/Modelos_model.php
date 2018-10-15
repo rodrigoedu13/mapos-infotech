@@ -62,8 +62,12 @@ class Modelos_model extends CI_Model {
         return $this->db->get('os')->row();
     }
 
-    function count($table) {
-        return $this->db->count_all($table);
+    function getModelosbyMarcas($id){
+        $this->db->where('marcas_id',$id);
+        $this->db->where('situacao',0);
+        $this->db->order_by('modelos');
+        $query = $this->db->get('modelos');
+        return $query;
     }
 
 }

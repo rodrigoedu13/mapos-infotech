@@ -94,10 +94,10 @@ class Os extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
-        
+
         $this->load->model('marcas_model');
         $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
-        
+
         $this->load->model('equipamentos_model');
         $this->data['equipamentos'] = $this->equipamentos_model->getEquipamentosDropdown();
 
@@ -135,7 +135,11 @@ class Os extends CI_Controller {
                 'status' => set_value('status'),
                 'observacoes' => set_value('observacoes'),
                 'laudoTecnico' => set_value('laudoTecnico'),
-                'faturado' => 0
+                'faturado' => 0,
+                'equipamentos_id' => set_value('equipamento'),
+                'marcas_id' => set_value('marca'),
+                'modelos_id' => set_value('modelo'),
+                'nr_serie' => set_value('serie')
             );
 
             if (is_numeric($id = $this->os_model->add('os', $data, true))) {
@@ -196,6 +200,12 @@ class Os extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+        
+        $this->load->model('marcas_model');
+        $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
+
+        $this->load->model('equipamentos_model');
+        $this->data['equipamentos'] = $this->equipamentos_model->getEquipamentosDropdown();
 
         if ($this->form_validation->run('os') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
@@ -225,11 +235,15 @@ class Os extends CI_Controller {
                 'observacoes' => $this->input->post('observacoes'),
                 'laudoTecnico' => $this->input->post('laudoTecnico'),
                 'usuarios_id' => $this->input->post('usuarios_id'),
-                'clientes_id' => $this->input->post('clientes_id')
+                'clientes_id' => $this->input->post('clientes_id'),
+                'equipamentos_id' => $this->input->post('equipamento'),
+                'marcas_id' => $this->input->post('marca'),
+                'modelos_id' => $this->input->post('modelo'),
+                'nr_serie' => $this->input->post('serie')
             );
 
             if ($this->input->post('status') == 'Finalizado' && $dataFinal == 0) {
-                $this->session->set_flashdata('error','Status alterado para Finalizado, necessário inserir data final.');
+                $this->session->set_flashdata('error', 'Status alterado para Finalizado, necessário inserir data final.');
                 redirect(base_url() . 'index.php/os/editar/' . $this->input->post('idOs'));
             } else {
                 if ($this->os_model->edit('os', $data, 'idOs', $this->input->post('idOs')) == TRUE) {
@@ -247,6 +261,7 @@ class Os extends CI_Controller {
         $this->data['anexos'] = $this->os_model->getAnexos($this->uri->segment(3));
         $this->data['view'] = 'os/editarOs';
         $this->load->view('tema/topo', $this->data);
+        
     }
 
     public function visualizar() {
@@ -268,7 +283,7 @@ class Os extends CI_Controller {
         $this->data['servicos'] = $this->os_model->getServicos($this->uri->segment(3));
         $this->data['emitente'] = $this->mapos_model->getEmitente();
 
-        $this->data['view'] = 'os/visualizarOs';
+        $this->data['view'] = 'os/visualizarOs2';
         $this->load->view('tema/topo', $this->data);
     }
 
@@ -613,6 +628,18 @@ class Os extends CI_Controller {
         $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS.');
         $json = array('result' => false);
         echo json_encode($json);
+    }
+
+    public function buscaModelosbyMarcas() {
+        $this->load->model('modelos_model');
+        $id = $this->input->post('id_marcas');
+        $option = "<option value = ' '>Selecione o Modelo...</option>";
+        $modelos = $this->modelos_model->getModelosbyMarcas($id);
+        foreach ($modelos->result() as $linha) {
+            $option .= "<option value='$linha->idModelos'>$linha->modelos</option>";
+        }
+
+        echo $option;
     }
 
 }

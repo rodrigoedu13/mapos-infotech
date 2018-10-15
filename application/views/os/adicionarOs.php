@@ -1,6 +1,25 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/jquery.validate.js"></script>
+<script>
+
+
+        $(function() {
+            $('#marcas').change(function(){
+                $('#modelos').attr('disabled','disabled');
+                $('#modelos').html("<option>Carregando...</option>");
+                var id_marcas = $('#marcas').val();
+            $.post("<?php echo base_url(); ?>index.php/os/buscaModelosbyMarcas", {
+                id_marcas: id_marcas
+            }, function (data) {
+                //console.log(data);
+                 $('#modelos').html(data);
+                 $('#modelos').removeAttr('disabled')
+            });
+        });
+        });
+
+</script>
 <div class="row-fluid" style="margin-top:0">
     <div class="span12">
         <div class="widget-box">
@@ -24,20 +43,21 @@
                                 <?php if ($custom_error == true) { ?>
                                     <div class="span12 alert alert-danger" id="divInfo" style="padding: 1%;">Dados incompletos, verifique os campos com asterisco ou se selecionou corretamente cliente e responsável.</div>
                                 <?php } ?>
-                                    <form action="<?php echo current_url(); ?>" method="post" autocomplete="off" id="formOs">
+                                <form action="<?php echo current_url(); ?>" method="post" autocomplete="off" id="formOs">
 
                                     <div class="span12" style="padding: 1%">
                                         <div class="span6">
-                                            <label for="cliente">Cliente<span class="required">*</span></label>
+                                            <label for="cliente" class="control-label">Cliente<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
                                         </div>
                                         <div class="span6">
-                                            <label for="tecnico">Técnico / Responsável<span class="required">*</span></label>
+                                            <label for="tecnico" class="control-label">Técnico / Responsável<span class="required">*</span></label>
                                             <input id="tecnico" class="span12" type="text" name="tecnico" value=""  />
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value=""  />
                                         </div>
                                     </div>
+                                    
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <div class="span3">
                                             <label for="status">Status<span class="required">*</span></label>
@@ -73,24 +93,30 @@
                             </div>
 
                             <div class="span12" style="padding: 1%; margin-left: 0">
-                                
-                                <div class="span3">
+
+                                <div class="span2">
                                     <label for="Equipamento">Equipamento<span class="required">*</span></label>
-                                    <div class="controls">
-                                        <?php echo form_dropdown($name = 'equipamento', $options = $equipamentos); ?>
-                                    </div>
+                                    <?php echo form_dropdown($name = 'equipamento', $options = $equipamentos); ?>
                                 </div>
-                                <div class="span3">
+                                <div class="span2">
                                     <label for="Marca">Marca<span class="required">*</span></label>
-                                    <div class="controls">
-                                        <?php echo form_dropdown($name = 'marca', $options = $marcas); ?>
+                                    <div >
+                                        <?php
+                                        $js = array(
+                                            'id' => 'marcas'
+                                        );
+                                        $options = array ('0' => 'Selecione uma Marca') + $marcas;
+                                        echo form_dropdown('marca', $options, 0, $js);
+                                        ?>
                                     </div>
                                 </div>
-                                <div class="span3">
-                                    <label for="modelo">Modelo</label>
-                                    <input id="modelo" type="text" class="span12" name="modelo" />
+                                <div class="span2">
+                                    <label for="modelo">Modelo<span class="required">*</span></label>
+                                    <select name="modelo" id="modelos" disabled>
+                                        <option>Selecione a Marca</option>
+                                    </select>
                                 </div>
-                                <div class="span3">
+                                <div class="span2">
                                     <label for="serie">Nº Serie</label>
                                     <input id="serie" type="text" class="span12" name="serie" />
                                 </div>
@@ -148,6 +174,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        
+
 
         $("#cliente").autocomplete({
             source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",

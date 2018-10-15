@@ -28,17 +28,19 @@
 
                             <div class="span12" id="divCadastrarOs">
 
-                                <form action="<?php echo current_url(); ?>" method="post" id="formOs">
-                                    <?php echo form_hidden('idOs', $result->idOs) ?>
+                                <form action="<?php echo current_url(); ?>" method="post" autocomplete="off" id="formOs">
+                                    <?php 
+                                    echo form_hidden('idOs', $result->idOs) ?>
 
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <h3>#Protocolo: <?php echo $result->idOs ?></h3>
 
-                                        <div class="span6 control-group" style="margin-left: 0">
+                                        <div class="span6 control-group input-append" style="margin-left: 0">
                                             <label for="cliente">Cliente<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value="<?php echo $result->nomeCliente ?>"  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value="<?php echo $result->clientes_id ?>"  />
                                             <input id="valorTotal" type="hidden" name="valorTotal" value=""  />
+                                            <span class="add-on"><i class="icon-plus"></i></span>
                                         </div>
                                         <div class="span6 control-group">
                                             <label for="tecnico">Técnico / Responsável<span class="required">*</span></label>
@@ -82,11 +84,12 @@
                                                 ?> value="Cancelado">Cancelado</option>
                                             </select>
                                         </div>
-                                        <div class="span3 control-group">
+                                        <div class="span2 control-group input-append">
                                             <label for="dataInicial">Data Inicial<span class="required">*</span></label>
                                             <input id="dataInicial" class="span12 datepicker" type="text" name="dataInicial" value="<?php echo date('d/m/Y', strtotime($result->dataInicial)); ?>"  />
+                                            <span class="add-on"><i class="icon-calendar"></i></span>
                                         </div>
-                                        <div class="span3">
+                                        <div class="span2 input-append">
                                             <label for="dataFinal">Data Final</label>
                                             <input id="dataFinal" class="span12 datepicker" type="text" name="dataFinal" value="<?php
                                             if ($result->dataFinal == 0) {
@@ -95,38 +98,61 @@
                                                 echo date('d/m/Y', strtotime($result->dataFinal));
                                             }
                                             ?>"  />
+                                            <span class="add-on"><i class="icon-calendar"></i></span>
                                         </div>
 
                                         <div class="span3">
                                             <label for="garantia">Garantia</label>
-                                            <input id="garantia" type="text" class="span12" name="garantia" value="<?php echo $result->garantia ?>"  />
+                                            <select id="garantia" name="garantia">
+                                                <option value="30" <?= ($result->garantia == 30) ? 'selected' : '' ?>>30 dias</option>
+                                                <option value="60" <?= ($result->garantia == 60) ? 'selected' : '' ?>>60 dias</option>
+                                                <option value="90" <?= ($result->garantia == 90) ? 'selected' : '' ?>>90 dias</option>
+                                                <option value="180" <?= ($result->garantia == 180) ? 'selected' : '' ?>>6 meses</option>
+                                                <option value="360" <?= ($result->garantia == 360) ? 'selected' : '' ?>>1 ano</option>
+                                            </select> 
                                         </div>
 
                                     </div>
 
                                     <div class="span12" style="padding: 1%; margin-left: 0">
 
-                                        <div class="span3">
-                                            <label for="defeito">Marca</label>
-                                            <input id="garantia" type="text" class="span12" name="garantia" value="<?php echo $result->garantia ?>"  />
+                                        <div class="span2 control-group">
+                                            <label for="equipamento">Equipamento<span class="required">*</span></label>
+                                            <?php
+                                            $js = array(
+                                                'id' => 'equipamento'
+                                            );
+                                            $options = array($result->idEquipamentos => $result->equipamento) + $equipamentos;
+                                            echo form_dropdown('equipamento', $options, 0, $js);
+                                            ?>
                                         </div>
-                                        <div class="span3">
-                                            <label for="descricaoProduto">Equipamento</label>
-                                            <input id="garantia" type="text" class="span12" name="garantia" value="<?php echo $result->garantia ?>"  />
-                                        </div>
-                                        <div class="span3">
-                                            <label for="defeito">Modelo</label>
-                                            <input id="garantia" type="text" class="span12" name="garantia" value="<?php echo $result->garantia ?>"  />
-                                        </div>
-                                        <div class="span3">
-                                            <label for="defeito">Serie</label>
-                                            <input id="garantia" type="text" class="span12" name="garantia" value="<?php echo $result->garantia ?>"  />
-                                        </div>
-                                        
-                                           
-                                    </div> 
-                                       
+                                        <div class="span2 control-group">
+                                            <label for="marca">Marca<span class="required">*</span></label>
+                                            <?php
+                                            $js = array(
+                                                'id' => 'marcas'
+                                            );
+                                            $options = array($result->idMarcas => $result->marca) + $marcas;
+                                            echo form_dropdown('marca', $options, 0, $js);
+                                            ?>
 
+                                        </div>                                        
+                                        <div class="span2 control-group">
+                                            <label for="modelo">Modelo<span class="required">*</span></label>
+                                            <select name="modelo" id="modelos">
+                                                <option value="<?php echo $result->idModelos ?>"><?php echo $result->modelos ?></option>
+                                            </select>
+                                        </div>
+                                        <div class="span2">
+                                            <label for="serie">Nº de Série</label>
+                                            <input id="serie" type="text" class="span12" name="serie" value="<?php echo $result->nr_serie ?>"  />
+
+                                        </div>
+
+
+                                    </div> 
+
+                                    
                                     <div class="span12" style="padding: 1%; margin-left: 0">
 
                                         <div class="span6">
@@ -151,9 +177,9 @@
                                     </div>
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <div class="span6 offset3" style="text-align: center">
-                                            <?php if ($result->faturado == 0) { ?>
-                                                <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
-                                            <?php } ?>
+                                            <?php // if ($result->faturado == 0) { ?>
+<!--                                                <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>-->
+                                            <?php // } ?>
                                             <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/os/visualizar/<?php echo $result->idOs; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar OS</a>
                                             <a href="<?php echo base_url() ?>index.php/os" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
@@ -389,6 +415,7 @@
                                         <input type="radio" name="pagamento" id="parcelado" />Parcelado
 
                                     </div>
+                                    
                                     <div class="span12" id="Vavista" style="padding: 1%; margin-left: 0">
                                         <div class="span2 control-group">
                                             <label for="dataInicial">Vencimento<span class="required">*</span></label>
@@ -439,9 +466,9 @@
                                         </div>
                                     </div>
                                     <div class="span1">
-                                            <label for="">&nbsp;</label>
-                                            <button class="btn btn-success"><i class="icon-white icon-refresh"></i> Faturar</button>
-                                        </div>
+                                        <label for="">&nbsp;</label>
+                                        <button class="btn btn-success"><i class="icon-white icon-refresh"></i> Faturar</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -567,7 +594,17 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        
+        $(function () {
+            $('#marcas').change(function () {
+                $('#modelos').html("<option>Carregando...</option>");
+                var id_marcas = $('#marcas').val();
+                $.post("<?php echo base_url(); ?>index.php/os/buscaModelosbyMarcas", {
+                    id_marcas: id_marcas
+                }, function (data) {
+                    $('#modelos').html(data);
+                });
+            });
+        });
 
         $(".money").maskMoney();
 
@@ -685,12 +722,19 @@
             rules: {
                 cliente: {required: true},
                 tecnico: {required: true},
-                dataInicial: {required: true}
+                dataInicial: {required: true},
+                equipamento: {required: true},
+                marcas: {required: true},
+                modelos: {required: true}
+                
             },
             messages: {
                 cliente: {required: 'Campo Requerido.'},
                 tecnico: {required: 'Campo Requerido.'},
-                dataInicial: {required: 'Campo Requerido.'}
+                dataInicial: {required: 'Campo Requerido.'},
+                equipamento: {required: 'Campo Requerido.'},
+                marcas: {required: 'Campo Requerido.'},
+                modelos: {required: 'Campo Requerido.'}
             },
 
             errorClass: "help-inline",

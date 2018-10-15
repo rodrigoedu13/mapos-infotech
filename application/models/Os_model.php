@@ -88,10 +88,13 @@ class Os_model extends CI_Model {
     }
 
     function getById($id){
-        $this->db->select('os.*, clientes.*, usuarios.telefone, usuarios.email,usuarios.nome');
+        $this->db->select('os.*, clientes.*, marcas.idMarcas, marcas.marca, modelos.idModelos, modelos.modelos, equipamentos.idEquipamentos, equipamentos.equipamento, usuarios.telefone, usuarios.email,usuarios.nome');
         $this->db->from('os');
         $this->db->join('clientes','clientes.idClientes = os.clientes_id');
         $this->db->join('usuarios','usuarios.idUsuarios = os.usuarios_id');
+        $this->db->join('marcas','marcas.idMarcas = os.marcas_id','left');
+        $this->db->join('modelos','modelos.idModelos = os.modelos_id','left');
+        $this->db->join('equipamentos','equipamentos.idEquipamentos = os.equipamentos_id','left');
         $this->db->where('os.idOs',$id);
         $this->db->limit(1);
         return $this->db->get()->row();

@@ -1587,3 +1587,6 @@ div.dataTables_wrapper .ui-widget-header {
 }
 #sidebar .content{ display:none;}
 }
+.required{
+    color: red;
+}

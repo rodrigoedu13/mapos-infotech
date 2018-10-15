@@ -190,6 +190,21 @@ $config = array('clientes' => array(array(
             'rules' => 'required|trim'
         ),
         array(
+            'field' => 'marca',
+            'label' => 'marca',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'equipamento',
+            'label' => 'equipamento',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'modelo',
+            'label' => 'modelo',
+            'rules' => 'required|trim'
+        ),
+        array(
             'field' => 'observacoes',
             'label' => 'Observacoes',
             'rules' => 'trim'

@@ -60,6 +60,7 @@ class Marcas_model extends CI_Model {
 
     function getMarcasDropdown() {
         $this->db->select('idMarcas,marca');
+        $this->db->order_by('marca');
         $results = $this->db->get('marcas')->result();
         $list = array();
         foreach ($results as $result) {
