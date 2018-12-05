@@ -418,7 +418,7 @@
                                     
                                     <div class="span12" id="Vavista" style="padding: 1%; margin-left: 0">
                                         <div class="span2 control-group">
-                                            <label for="dataInicial">Vencimento<span class="required">*</span></label>
+                                            <label for="dataVencimento">Vencimento<span class="required">*</span></label>
                                             <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y'); ?>"  />
                                         </div>
                                         <div class="span2 control-group">
@@ -439,12 +439,12 @@
                                     </div>
                                     <div class="span12 hidden" id="Vparcelado" style="padding: 1%; margin-left: 0">
                                         <div class="span2 control-group">
-                                            <label for="valorParcela">Intervalo das parcelas<span class="required">*</span></label>
-                                            <input id="ValorParcela" class="span12" type="text" name="valorParcela" value="30"  />
+                                            <label for="intParcela">Intervalo das parcelas<span class="required">*</span></label>
+                                            <input id="intParcela" class="span12" type="text" name="intParcela" value="30"  />
                                         </div>
                                         <div class="span3">
-                                            <label for="formaPgto">Qnt. Parcelas</label>
-                                            <select name="formaPgto" id="formaPgto" class="span12">
+                                            <label for="qtParcela">Qnt. Parcelas</label>
+                                            <select name="qtParcela" id="qtParcela" class="span12">
                                                 <option value="1">1 vez</option>
                                                 <option value="2">2 vezes</option>
                                                 <option value="3">3 vezes</option>
@@ -460,14 +460,14 @@
 
                                             </select> 
                                         </div>
-                                        <div class="span2 control-group">
-                                            <label for="dataInicial">Data 1º parcela<span class="required">*</span></label>
-                                            <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y'); ?>"  />
+                                        <div class="span2">
+                                        <label for="">&nbsp;</label>
+                                        <button class="btn btn-primary"><i class="icon-white icon-refresh"></i> Gerar Parcelas</button>
                                         </div>
                                     </div>
                                     <div class="span1">
                                         <label for="">&nbsp;</label>
-                                        <button class="btn btn-success"><i class="icon-white icon-refresh"></i> Faturar</button>
+                                        <button class="btn btn-success"><i class="icon-white icon-money"></i> Faturar</button>
                                     </div>
                                 </form>
                             </div>
