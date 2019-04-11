@@ -4,7 +4,7 @@
 date_default_timezone_set('America/Sao_Paulo');
 
 
-$config['app_version'] = '3.2'; 
+$config['app_version'] = '3.4'; 
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ $config['app_version'] = '3.2';
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8080/mapos-master/';
+$config['base_url'] = 'http://localhost/mapos/';
 
 /*
 |--------------------------------------------------------------------------
@@ -329,7 +329,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '6f;~d5df;.s.d.fwe';
+$config['encryption_key'] = '74a594eb281f7a6';
 
 /*
 |--------------------------------------------------------------------------

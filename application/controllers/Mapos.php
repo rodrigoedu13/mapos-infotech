@@ -44,26 +44,16 @@ class Mapos extends CI_Controller {
      
     }
 
-    public function alterarSenha() {
-        if( (!session_id()) || (!$this->session->userdata('logado'))){
-            redirect('mapos/login');
-        }
+    public function alterarSenha($senha)
+    {
+        $this->db->set('senha', password_hash($senha, PASSWORD_DEFAULT));
+        $this->db->where('idUsuarios',  $this->session->userdata('id'));
+        $this->db->update('usuarios');
 
-        $this->load->library('encryption');
-        $this->encryption->initialize(array('driver' => 'mcrypt'));
-        
-        $oldSenha = $this->input->post('oldSenha');
-        $senha = $this->input->post('novaSenha');
-        $result = $this->mapos_model->alterarSenha($senha,$oldSenha,$this->session->userdata('id'));
-        if($result){
-            $this->session->set_flashdata('success','Senha Alterada com sucesso!');
-            redirect(base_url() . 'index.php/mapos/minhaConta');
+        if ($this->db->affected_rows() >= 0) {
+            return true;
         }
-        else{
-            $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar a senha!');
-            redirect(base_url() . 'index.php/mapos/minhaConta');
-            
-        }
+        return false;
     }
 
     public function pesquisar() {
@@ -95,48 +85,50 @@ class Mapos extends CI_Controller {
 
 
     public function verificarLogin(){
-        
-        header('Access-Control-Allow-Origin: '.base_url());
+
+        header('Access-Control-Allow-Origin: ' . base_url());
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
         header('Access-Control-Max-Age: 1000');
         header('Access-Control-Allow-Headers: Content-Type');
-        
+
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('email','E-mail','valid_email|required|trim');
-        $this->form_validation->set_rules('senha','Senha','required|trim');
+        $this->form_validation->set_rules('email', 'E-mail', 'valid_email|required|trim');
+        $this->form_validation->set_rules('senha', 'Senha', 'required|trim');
         if ($this->form_validation->run() == false) {
             $json = array('result' => false, 'message' => validation_errors());
             echo json_encode($json);
-        }
-        else {
+        } else {
             $email = $this->input->post('email');
             $password = $this->input->post('senha');
             $this->load->model('Mapos_model');
             $user = $this->Mapos_model->check_credentials($email);
 
-            if($user){
-
-                $this->load->library('encryption');
-                $this->encryption->initialize(array('driver' => 'mcrypt'));
-                $password_stored =  $this->encryption->decrypt($user->senha);
-
-                if($password == $password_stored){
-                    $session_data = array('nome' => $user->nome, 'email' => $user->email, 'id' => $user->idUsuarios,'permissao' => $user->permissoes_id , 'logado' => TRUE);
+            if ($user) {
+                if (password_verify($password, $user->senha)) {
+                    $session_data = array('nome' => $user->nome, 'email' => $user->email, 'id' => $user->idUsuarios, 'expirado' => $this->chk_date($user->dataExpiracao), 'permissao' => $user->permissoes_id, 'logado' => true);
                     $this->session->set_userdata($session_data);
                     $json = array('result' => true);
                     echo json_encode($json);
-                }
-                else{
+                  
+                } else {
                     $json = array('result' => false, 'message' => 'Os dados de acesso estão incorretos.');
                     echo json_encode($json);
                 }
-            }
-            else{
+            } else {
                 $json = array('result' => false, 'message' => 'Usuário não encontrado, verifique se suas credenciais estão corretass.');
                 echo json_encode($json);
             }
         }
         die();
+    }
+    
+    private function chk_date($data_banco)
+    {
+
+        $data_banco = new DateTime($data_banco);
+        $data_hoje  = new DateTime("now");
+
+        return $data_banco < $data_hoje;
     }
 
 

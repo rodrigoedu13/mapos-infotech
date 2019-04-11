@@ -422,8 +422,8 @@
                                             <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y'); ?>"  />
                                         </div>
                                         <div class="span2 control-group">
-                                            <label for="valorParcela">Valor da Parcela<span class="required">*</span></label>
-                                            <input id="ValorParcela" class="span12 money" type="text" name="valorParcela" value="<?php echo number_format($total + $totalProduto - ($descontoTotalProduto + $descontoTotalServico), 2, '.', '.'); ?>"  />
+                                            <label for="valor">Valor<span class="required">*</span></label>
+                                            <input id="Valor" class="span12 money" type="text" name="valor" value="<?php echo number_format($total + $totalProduto - ($descontoTotalProduto + $descontoTotalServico), 2, '.', '.'); ?>"  />
                                         </div>
                                         <div class="span3">
                                             <label for="formaPgto">Forma de Pagamento</label>

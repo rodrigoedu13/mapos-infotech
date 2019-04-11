@@ -94,11 +94,11 @@
 
                             <div class="span12" style="padding: 1%; margin-left: 0">
 
-                                <div class="span2">
+                                <div class="span3">
                                     <label for="Equipamento">Equipamento<span class="required">*</span></label>
                                     <?php echo form_dropdown($name = 'equipamento', $options = $equipamentos); ?>
                                 </div>
-                                <div class="span2">
+                                <div class="span3">
                                     <label for="Marca">Marca<span class="required">*</span></label>
                                     <div >
                                         <?php
@@ -110,13 +110,13 @@
                                         ?>
                                     </div>
                                 </div>
-                                <div class="span2">
+                                <div class="span3">
                                     <label for="modelo">Modelo<span class="required">*</span></label>
                                     <select name="modelo" id="modelos" disabled>
                                         <option>Selecione a Marca</option>
                                     </select>
                                 </div>
-                                <div class="span2">
+                                <div class="span3">
                                     <label for="serie">Nº Serie</label>
                                     <input id="serie" type="text" class="span12" name="serie" />
                                 </div>

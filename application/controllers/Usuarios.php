@@ -68,68 +68,58 @@ class Usuarios extends CI_Controller {
 		
     }
 	
-    function adicionar(){  
-          
-        $this->load->library('form_validation');    
-		$this->data['custom_error'] = '';
-		
-        if ($this->form_validation->run('usuarios') == false)
-        {
-             $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-danger">'.validation_errors().'</div>' : false);
+    function adicionar(){
 
-        } else
-        {     
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
 
-            $this->load->library('encryption');
-            $this->encryption->initialize(array('driver' => 'mcrypt'));
+        if ($this->form_validation->run('usuarios') == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="alert alert-danger">' . validation_errors() . '</div>' : false);
+        } else {
 
             $data = array(
-                    'nome' => set_value('nome'),
-					'rg' => set_value('rg'),
-					'cpf' => set_value('cpf'),
-					'rua' => set_value('rua'),
-					'numero' => set_value('numero'),
-					'bairro' => set_value('bairro'),
-					'cidade' => set_value('cidade'),
-					'estado' => set_value('estado'),
-					'email' => set_value('email'),
-					'senha' => $this->encryption->encrypt($this->input->post('senha')),
-					'telefone' => set_value('telefone'),
-					'celular' => set_value('celular'),
-					'situacao' => set_value('situacao'),
-                    'permissoes_id' => $this->input->post('permissoes_id'),
-					'dataCadastro' => date('Y-m-d')
+                'nome' => set_value('nome'),
+                'rg' => set_value('rg'),
+                'cpf' => set_value('cpf'),
+                'rua' => set_value('rua'),
+                'numero' => set_value('numero'),
+                'bairro' => set_value('bairro'),
+                'cidade' => set_value('cidade'),
+                'estado' => set_value('estado'),
+                'email' => set_value('email'),
+                'senha' => password_hash($this->input->post('senha'), PASSWORD_DEFAULT),
+                'telefone' => set_value('telefone'),
+                'celular' => set_value('celular'),
+                'dataExpiracao' => set_value('dataExpiracao'),
+                'situacao' => set_value('situacao'),
+                'permissoes_id' => $this->input->post('permissoes_id'),
+                'dataCadastro' => date('Y-m-d')
             );
-           
-			if ($this->usuarios_model->add('usuarios',$data) == TRUE)
-			{
-                                $this->session->set_flashdata('success','Usuário cadastrado com sucesso!');
-				redirect(base_url().'index.php/usuarios/adicionar/');
-			}
-			else
-			{
-				$this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
 
-			}
-		}
-        
+            if ($this->usuarios_model->add('usuarios', $data) == true) {
+                $this->session->set_flashdata('success', 'Usuário cadastrado com sucesso!');
+                redirect(base_url() . 'index.php/usuarios/adicionar/');
+            } else {
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
+            }
+        }
+
         $this->load->model('permissoes_model');
-        $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes','permissoes.idPermissao,permissoes.nome');   
-		$this->data['view'] = 'usuarios/adicionarUsuario';
-        $this->load->view('tema/topo',$this->data);
-   
-       
-    }	
+        $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes', 'permissoes.idPermissao,permissoes.nome');
+        $this->data['view'] = 'usuarios/adicionarUsuario';
+        $this->load->view('tema/topo', $this->data);
+    }
+
     
-    function editar(){  
-        
-        if(!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))){
-            $this->session->set_flashdata('error','Item não pode ser encontrado, parâmetro não foi passado corretamente.');
+    function editar(){
+
+        if (!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))) {
+            $this->session->set_flashdata('error', 'Item não pode ser encontrado, parâmetro não foi passado corretamente.');
             redirect('mapos');
         }
 
-        $this->load->library('form_validation');    
-		$this->data['custom_error'] = '';
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
         $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
         $this->form_validation->set_rules('rg', 'RG', 'trim|required');
         $this->form_validation->set_rules('cpf', 'CPF', 'trim|required');
@@ -143,86 +133,72 @@ class Usuarios extends CI_Controller {
         $this->form_validation->set_rules('situacao', 'Situação', 'trim|required');
         $this->form_validation->set_rules('permissoes_id', 'Permissão', 'trim|required');
 
-        if ($this->form_validation->run() == false)
-        {
-             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">'.validation_errors().'</div>' : false);
+        if ($this->form_validation->run() == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        } else {
 
-        } else
-        { 
-
-            if ($this->input->post('idUsuarios') == 1 && $this->input->post('situacao') == 0)
-            {
-                $this->session->set_flashdata('error','O usuário super admin não pode ser desativado!');
-                redirect(base_url().'index.php/usuarios/editar/'.$this->input->post('idUsuarios'));
+            if ($this->input->post('idUsuarios') == 1 && $this->input->post('situacao') == 0) {
+                $this->session->set_flashdata('error', 'O usuário super admin não pode ser desativado!');
+                redirect(base_url() . 'index.php/usuarios/editar/' . $this->input->post('idUsuarios'));
             }
 
-            $senha = $this->input->post('senha'); 
-            if($senha != null){
+            $senha = $this->input->post('senha');
+            if ($senha != null) {
 
-                $this->load->library('encryption');
-                $this->encryption->initialize(array('driver' => 'mcrypt'));
-
-                $senha = $this->encryption->encrypt($senha);
+                $senha = password_hash($senha, PASSWORD_DEFAULT);
 
                 $data = array(
-                        'nome' => $this->input->post('nome'),
-                        'rg' => $this->input->post('rg'),
-                        'cpf' => $this->input->post('cpf'),
-                        'rua' => $this->input->post('rua'),
-                        'numero' => $this->input->post('numero'),
-                        'bairro' => $this->input->post('bairro'),
-                        'cidade' => $this->input->post('cidade'),
-                        'estado' => $this->input->post('estado'),
-                        'email' => $this->input->post('email'),
-                        'senha' => $senha,
-                        'telefone' => $this->input->post('telefone'),
-                        'celular' => $this->input->post('celular'),
-                        'situacao' => $this->input->post('situacao'),
-                        'permissoes_id' => $this->input->post('permissoes_id')
+                    'nome' => $this->input->post('nome'),
+                    'rg' => $this->input->post('rg'),
+                    'cpf' => $this->input->post('cpf'),
+                    'rua' => $this->input->post('rua'),
+                    'numero' => $this->input->post('numero'),
+                    'bairro' => $this->input->post('bairro'),
+                    'cidade' => $this->input->post('cidade'),
+                    'estado' => $this->input->post('estado'),
+                    'email' => $this->input->post('email'),
+                    'senha' => $senha,
+                    'telefone' => $this->input->post('telefone'),
+                    'celular' => $this->input->post('celular'),
+                    'dataExpiracao' => set_value('dataExpiracao'),
+                    'situacao' => $this->input->post('situacao'),
+                    'permissoes_id' => $this->input->post('permissoes_id')
                 );
-            }  
-
-            else{
+            } else {
 
                 $data = array(
-                        'nome' => $this->input->post('nome'),
-                        'rg' => $this->input->post('rg'),
-                        'cpf' => $this->input->post('cpf'),
-                        'rua' => $this->input->post('rua'),
-                        'numero' => $this->input->post('numero'),
-                        'bairro' => $this->input->post('bairro'),
-                        'cidade' => $this->input->post('cidade'),
-                        'estado' => $this->input->post('estado'),
-                        'email' => $this->input->post('email'),
-                        'telefone' => $this->input->post('telefone'),
-                        'celular' => $this->input->post('celular'),
-                        'situacao' => $this->input->post('situacao'),
-                        'permissoes_id' => $this->input->post('permissoes_id')
+                    'nome' => $this->input->post('nome'),
+                    'rg' => $this->input->post('rg'),
+                    'cpf' => $this->input->post('cpf'),
+                    'rua' => $this->input->post('rua'),
+                    'numero' => $this->input->post('numero'),
+                    'bairro' => $this->input->post('bairro'),
+                    'cidade' => $this->input->post('cidade'),
+                    'estado' => $this->input->post('estado'),
+                    'email' => $this->input->post('email'),
+                    'telefone' => $this->input->post('telefone'),
+                    'celular' => $this->input->post('celular'),
+                    'dataExpiracao' => set_value('dataExpiracao'),
+                    'situacao' => $this->input->post('situacao'),
+                    'permissoes_id' => $this->input->post('permissoes_id')
                 );
+            }
 
-            }  
 
-           
-			if ($this->usuarios_model->edit('usuarios',$data,'idUsuarios',$this->input->post('idUsuarios')) == TRUE)
-			{
-                $this->session->set_flashdata('success','Usuário editado com sucesso!');
-				redirect(base_url().'index.php/usuarios/editar/'.$this->input->post('idUsuarios'));
-			}
-			else
-			{
-				$this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
+            if ($this->usuarios_model->edit('usuarios', $data, 'idUsuarios', $this->input->post('idUsuarios')) == true) {
+                $this->session->set_flashdata('success', 'Usuário editado com sucesso!');
+                redirect(base_url() . 'index.php/usuarios/editar/' . $this->input->post('idUsuarios'));
+            } else {
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro</p></div>';
+            }
+        }
 
-			}
-		}
-
-		$this->data['result'] = $this->usuarios_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->usuarios_model->getById($this->uri->segment(3));
         $this->load->model('permissoes_model');
-        $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes','permissoes.idPermissao,permissoes.nome'); 
+        $this->data['permissoes'] = $this->permissoes_model->getActive('permissoes', 'permissoes.idPermissao,permissoes.nome');
 
-		$this->data['view'] = 'usuarios/editarUsuario';
-        $this->load->view('tema/topo',$this->data);
-			
-      
+        $this->data['view'] = 'usuarios/editarUsuario';
+        $this->load->view('tema/topo', $this->data);
     }
 	
     public function excluir(){
