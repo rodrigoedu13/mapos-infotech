@@ -15,6 +15,7 @@ class Clientes extends CI_Controller {
         $this->load->helper(array('codegen_helper'));
         $this->load->model('clientes_model', '', TRUE);
         $this->data['menuClientes'] = 'clientes';
+        $this->data['menuCadastros'] = 'cadastros';
     }
 
     function index() {

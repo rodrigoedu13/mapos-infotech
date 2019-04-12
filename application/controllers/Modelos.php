@@ -15,7 +15,9 @@ class Modelos extends CI_Controller {
 
         $this->load->helper(array('form', 'codegen_helper'));
         $this->load->model('modelos_model', '', TRUE);
-        $this->data['menuProdutos'] = 'Produtos';
+        $this->data['menuModelos'] = 'Modelos';
+        $this->data['menuCadastros'] = 'Cadastros';
+        
     }
 
     function index() {

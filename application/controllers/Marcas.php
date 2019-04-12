@@ -15,7 +15,8 @@ class Marcas extends CI_Controller {
 
         $this->load->helper(array('form', 'codegen_helper'));
         $this->load->model('marcas_model', '', TRUE);
-        $this->data['menuProdutos'] = 'Produtos';
+        $this->data['menuMarcas'] = 'Marcas';
+        $this->data['menuCadastros'] = 'Cadastros';
     }
 
     function index() {

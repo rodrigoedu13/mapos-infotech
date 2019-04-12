@@ -15,7 +15,8 @@ class Equipamentos extends CI_Controller {
 
         $this->load->helper(array('form', 'codegen_helper'));
         $this->load->model('equipamentos_model', '', TRUE);
-        $this->data['menuProdutos'] = 'Produtos';
+        $this->data['menuEquipamentos'] = 'Equipamentos';
+        $this->data['menuCadastros'] = 'cadastros';
     }
 
     function index() {

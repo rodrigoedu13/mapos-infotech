@@ -17,6 +17,7 @@ class Produtos extends CI_Controller {
         $this->load->helper(array('form', 'codegen_helper'));
         $this->load->model('produtos_model', '', TRUE);
         $this->data['menuProdutos'] = 'Produtos';
+        $this->data['menuCadastros'] = 'cadastros';
     }
 
     function index(){

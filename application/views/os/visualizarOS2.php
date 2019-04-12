@@ -9,19 +9,21 @@ $status = $result->status;
 if ($status == "Orçamento") {
     $color = "inverse";
 } else if ($status == "Aprovado") {
-    $color = "info";
+    $color = "success";
 } else if ($status == "Em Andamento") {
     $color = "info";
 } else if ($status == "Finalizado") {
-    $color = "success";
+    $color = "info";
 } else if ($status == "Faturado") {
     $color = "success";
 } else if ($status == "Aguardando Peça") {
     $color = "warning";
 } else if ($status == "Aguardando Cliente") {
-    $color = "important";
-} else if ($status == "Cancelado") {
     $color = "default";
+} else if ($status == "Cancelado") {
+    $color = "important";
+} else if ($status == "Aberto") {
+    $color = "success";
 } else {
     $color = "default";
 }
@@ -92,7 +94,7 @@ if ($status == "Orçamento") {
                                                         echo $emitente[0]->telefone;
                                                     }
                                                     ?></br> E-mail: <?php echo $emitente[0]->email; ?> </span></td>
-                                                <td style="width: 18%; text-align: center"><span style="font-size: 16px">#Protocolo: <?php echo $result->idOs ?></span></br><span style="font-size: 14px">Emissão: <?php echo date('d/m/Y') ?></span><?php
+                                                <td style="width: 18%; text-align: center"><span style="font-size: 16px">#Nº OS: <?php echo $result->idOs ?></span></br><span style="font-size: 14px">Emissão: <?php echo date('d/m/Y') ?></span><?php
                                                     if ($result->garantia == 'selecione') {
                                                         echo '';
                                                     } else
@@ -160,7 +162,7 @@ if ($result->equipamento == 'selecione') {
                                             <th style="width: 5%; text-align: right;">Quantidade</th>
                                             <th style="width: 10%; text-align: right;">Valor do Produto</th>
                                             <th style="width: 10%; text-align: right;">Desconto</th>
-                                            <th style="width: 10%; text-align: right;">Sub-total</th>
+                                            <th style="width: 10%; text-align: right;">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>

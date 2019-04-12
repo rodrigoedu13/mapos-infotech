@@ -601,7 +601,8 @@ class Os extends CI_Controller {
                 'baixado' => $this->input->post('recebido') ?: 0,
                 'cliente_fornecedor' => set_value('cliente'),
                 'forma_pgto' => $this->input->post('formaPgto'),
-                'tipo' => $this->input->post('tipo')
+                'tipo' => $this->input->post('tipo'),
+                'os_id' => $this->input->post('os_id')
             );
 
             if ($this->os_model->add('lancamentos', $data) == TRUE) {
@@ -625,7 +626,7 @@ class Os extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS.');
+        $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS2.');
         $json = array('result' => false);
         echo json_encode($json);
     }

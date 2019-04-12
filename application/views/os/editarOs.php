@@ -29,18 +29,16 @@
                             <div class="span12" id="divCadastrarOs">
 
                                 <form action="<?php echo current_url(); ?>" method="post" autocomplete="off" id="formOs">
-                                    <?php 
-                                    echo form_hidden('idOs', $result->idOs) ?>
+                                    <?php echo form_hidden('idOs', $result->idOs) ?>
 
                                     <div class="span12" style="padding: 1%; margin-left: 0">
-                                        <h3>#Protocolo: <?php echo $result->idOs ?></h3>
+                                        <h3>#Nº OS: <?php echo $result->idOs ?></h3>
 
-                                        <div class="span6 control-group input-append" style="margin-left: 0">
+                                        <div class="span6 control-group" style="margin-left: 0">
                                             <label for="cliente">Cliente<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value="<?php echo $result->nomeCliente ?>"  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value="<?php echo $result->clientes_id ?>"  />
                                             <input id="valorTotal" type="hidden" name="valorTotal" value=""  />
-                                            <span class="add-on"><i class="icon-plus"></i></span>
                                         </div>
                                         <div class="span6 control-group">
                                             <label for="tecnico">Técnico / Responsável<span class="required">*</span></label>
@@ -53,52 +51,50 @@
                                             <label for="status">Status<span class="required">*</span></label>
                                             <select class="span12" name="status" id="status" value="">
                                                 <option <?php
-                                                if ($result->status == 'Orçamento') {
-                                                    echo 'selected';
-                                                }
-                                                ?> value="Orçamento">Orçamento</option>
+                                    if ($result->status == 'Orçamento') {
+                                        echo 'selected';
+                                    }
+                                    ?> value="Orçamento">Orçamento</option>
                                                 <option <?php
                                                 if ($result->status == 'Aberto') {
                                                     echo 'selected';
                                                 }
-                                                ?> value="Aberto">Aberto</option>
+                                    ?> value="Aberto">Aberto</option>
                                                 <option <?php
                                                 if ($result->status == 'Faturado') {
                                                     echo 'selected';
                                                 }
-                                                ?> value="Faturado">Faturado</option>
+                                    ?> value="Faturado">Faturado</option>
                                                 <option <?php
                                                 if ($result->status == 'Em Andamento') {
                                                     echo 'selected';
                                                 }
-                                                ?> value="Em Andamento">Em Andamento</option>
+                                    ?> value="Em Andamento">Em Andamento</option>
                                                 <option <?php
                                                 if ($result->status == 'Finalizado') {
                                                     echo 'selected';
                                                 }
-                                                ?> value="Finalizado">Finalizado</option>
+                                    ?> value="Finalizado">Finalizado</option>
                                                 <option <?php
                                                 if ($result->status == 'Cancelado') {
                                                     echo 'selected';
                                                 }
-                                                ?> value="Cancelado">Cancelado</option>
+                                    ?> value="Cancelado">Cancelado</option>
                                             </select>
                                         </div>
-                                        <div class="span2 control-group input-append">
+                                        <div class="span2 control-group">
                                             <label for="dataInicial">Data Inicial<span class="required">*</span></label>
                                             <input id="dataInicial" class="span12 datepicker" type="text" name="dataInicial" value="<?php echo date('d/m/Y', strtotime($result->dataInicial)); ?>"  />
-                                            <span class="add-on"><i class="icon-calendar"></i></span>
                                         </div>
-                                        <div class="span2 input-append">
+                                        <div class="span2 ">
                                             <label for="dataFinal">Data Final</label>
                                             <input id="dataFinal" class="span12 datepicker" type="text" name="dataFinal" value="<?php
-                                            if ($result->dataFinal == 0) {
-                                                echo '';
-                                            } else {
-                                                echo date('d/m/Y', strtotime($result->dataFinal));
-                                            }
-                                            ?>"  />
-                                            <span class="add-on"><i class="icon-calendar"></i></span>
+                                                if ($result->dataFinal == 0) {
+                                                    echo '';
+                                                } else {
+                                                    echo date('d/m/Y', strtotime($result->dataFinal));
+                                                }
+                                    ?>"  />
                                         </div>
 
                                         <div class="span3">
@@ -116,34 +112,36 @@
 
                                     <div class="span12" style="padding: 1%; margin-left: 0">
 
-                                        <div class="span2 control-group">
+                                        <div class="span3">
                                             <label for="equipamento">Equipamento<span class="required">*</span></label>
                                             <?php
                                             $js = array(
-                                                'id' => 'equipamento'
+                                                'id' => 'equipamento',
+                                                'class' => 'span12'
                                             );
                                             $options = array($result->idEquipamentos => $result->equipamento) + $equipamentos;
                                             echo form_dropdown('equipamento', $options, 0, $js);
                                             ?>
                                         </div>
-                                        <div class="span2 control-group">
+                                        <div class="span3">
                                             <label for="marca">Marca<span class="required">*</span></label>
                                             <?php
                                             $js = array(
-                                                'id' => 'marcas'
+                                                'id' => 'marcas',
+                                                'class' => 'span12'
                                             );
                                             $options = array($result->idMarcas => $result->marca) + $marcas;
                                             echo form_dropdown('marca', $options, 0, $js);
                                             ?>
 
                                         </div>                                        
-                                        <div class="span2 control-group">
+                                        <div class="span3">
                                             <label for="modelo">Modelo<span class="required">*</span></label>
-                                            <select name="modelo" id="modelos">
+                                            <select name="modelo" id="modelos" class="span12">
                                                 <option value="<?php echo $result->idModelos ?>"><?php echo $result->modelos ?></option>
                                             </select>
                                         </div>
-                                        <div class="span2">
+                                        <div class="span3">
                                             <label for="serie">Nº de Série</label>
                                             <input id="serie" type="text" class="span12" name="serie" value="<?php echo $result->nr_serie ?>"  />
 
@@ -152,7 +150,7 @@
 
                                     </div> 
 
-                                    
+
                                     <div class="span12" style="padding: 1%; margin-left: 0">
 
                                         <div class="span6">
@@ -177,9 +175,9 @@
                                     </div>
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <div class="span6 offset3" style="text-align: center">
-                                            <?php // if ($result->faturado == 0) { ?>
+                                            <?php // if ($result->faturado == 0) {  ?>
 <!--                                                <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>-->
-                                            <?php // } ?>
+                                            <?php // }  ?>
                                             <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/os/visualizar/<?php echo $result->idOs; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar OS</a>
                                             <a href="<?php echo base_url() ?>index.php/os" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
@@ -408,18 +406,24 @@
                         <!-- Pagamento -->
                         <div class="tab-pane" id="tab6">
                             <div class="span12" style="padding: 1%; margin-left: 0">
-                                <form id="formPagamento" action="" method="post">
+                                <form id="formFaturar" action="" method="post">
+                                    <input type="hidden" id="tipo" name="tipo" value="receita" /> 
+                                    <input type="hidden" name="clientes_id" id="clientes_id" value="<?php echo $result->clientes_id ?>">
+                                    <input type="hidden" name="os_id" id="os_id" value="<?php echo $result->idOs; ?>">
+                                    <input type="hidden" name="descricao" id="descricao" value="Fatura de O.S - #<?php echo $result->idOs;?>">
+                                    <input type="hidden" name="cliente" id="cliente" value="<?php echo $result->nomeCliente;?>">
+                                    <?php if ($result->faturado == 0){?>
                                     <div class="span12 well" style="padding: 1%; margin-left: 0">
 
-                                        <input type="radio" name="pagamento" id="avista" checked/>À vista
+                                        <input type="radio" name="pagamento" id="avista"/>À vista
                                         <input type="radio" name="pagamento" id="parcelado" />Parcelado
 
                                     </div>
-                                    
-                                    <div class="span12" id="Vavista" style="padding: 1%; margin-left: 0">
+
+                                    <div class="span12 hidden" id="Vavista" style="padding: 1%; margin-left: 0">
                                         <div class="span2 control-group">
                                             <label for="dataVencimento">Vencimento<span class="required">*</span></label>
-                                            <input id="dataVencimento" class="span12 datepicker" type="text" name="dataVencimento" value="<?php echo date('d/m/Y'); ?>"  />
+                                            <input id="vencimento" class="span12 datepicker" type="text" name="vencimento" value="<?php echo date('d/m/Y'); ?>"  />
                                         </div>
                                         <div class="span2 control-group">
                                             <label for="valor">Valor<span class="required">*</span></label>
@@ -461,14 +465,20 @@
                                             </select> 
                                         </div>
                                         <div class="span2">
-                                        <label for="">&nbsp;</label>
-                                        <button class="btn btn-primary"><i class="icon-white icon-refresh"></i> Gerar Parcelas</button>
+                                            <label for="">&nbsp;</label>
+                                            <button class="btn btn-primary"><i class="icon-white icon-refresh"></i> Gerar Parcelas</button>
                                         </div>
                                     </div>
-                                    <div class="span1">
+                                    <div class="span2">
                                         <label for="">&nbsp;</label>
+                                        
                                         <button class="btn btn-success"><i class="icon-white icon-money"></i> Faturar</button>
+                                       
                                     </div>
+                                     <?php }elseif ($result->faturado == 1){?>
+                                    <div class="alert alert-info">OS Já faturada!
+                                    </div>
+                                    <?php } ?>
                                 </form>
                             </div>
                         </div>
@@ -726,7 +736,7 @@
                 equipamento: {required: true},
                 marcas: {required: true},
                 modelos: {required: true}
-                
+
             },
             messages: {
                 cliente: {required: 'Campo Requerido.'},
@@ -979,13 +989,16 @@
 
         $('#avista').on('change', function () {
             if ($(this).is(':checked')) {
+                $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').addClass('hidden');
             }
         });
 
         $('#parcelado').on('change', function () {
             if ($(this).is(':checked')) {
+                $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').removeClass('hidden');
+                
             }
         });
 
