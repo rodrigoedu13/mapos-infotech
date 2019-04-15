@@ -222,7 +222,7 @@
                                             <tr>
                                                 <th>Produto</th>
                                                 <th>Quantidade</th>
-                                                <th>Valor</th>
+                                                <th>Valor Unit.</th>
                                                 <th>Desconto</th>
                                                 <th>Subtotal</th>
                                                 <th>Ações</th>
@@ -385,7 +385,7 @@
                                             <tr>
                                                 <th>Mão de Obra</th>
                                                 <th>Peças</th>
-                                                <th>Desconto</th>
+                                                <th>Descontos</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
@@ -427,7 +427,7 @@
                                         </div>
                                         <div class="span2 control-group">
                                             <label for="valor">Valor<span class="required">*</span></label>
-                                            <input id="Valor" class="span12 money" type="text" name="valor" value="<?php echo number_format($total + $totalProduto - ($descontoTotalProduto + $descontoTotalServico), 2, '.', '.'); ?>"  />
+                                            <input id="valor" class="span12 money" type="text" name="valor" value="<?php echo number_format($total + $totalProduto - ($descontoTotalProduto + $descontoTotalServico), 2, '.', '.'); ?>"  />
                                         </div>
                                         <div class="span3">
                                             <label for="formaPgto">Forma de Pagamento</label>
@@ -442,13 +442,10 @@
                                         </div>
                                     </div>
                                     <div class="span12 hidden" id="Vparcelado" style="padding: 1%; margin-left: 0">
-                                        <div class="span2 control-group">
-                                            <label for="intParcela">Intervalo das parcelas<span class="required">*</span></label>
-                                            <input id="intParcela" class="span12" type="text" name="intParcela" value="30"  />
-                                        </div>
                                         <div class="span3">
                                             <label for="qtParcela">Qnt. Parcelas</label>
-                                            <select name="qtParcela" id="qtParcela" class="span12">
+                                            <select name="qtparcela" id="qtparcela" class="span12">
+                                                <option selected="" value="">Selecione uma parcela</option>
                                                 <option value="1">1 vez</option>
                                                 <option value="2">2 vezes</option>
                                                 <option value="3">3 vezes</option>
@@ -464,19 +461,23 @@
 
                                             </select> 
                                         </div>
-                                        <div class="span2">
+<!--                                        <div class="span2">
                                             <label for="">&nbsp;</label>
                                             <button class="btn btn-primary"><i class="icon-white icon-refresh"></i> Gerar Parcelas</button>
-                                        </div>
+                                        </div>-->
                                     </div>
-                                    <div class="span2">
+                                    <div class="span12" style="padding: 1%; margin-left: 0">
+                                        <div class="span6" id="resultado"></div>
+                                        
+                                    </div>
+                                    <div class="span2 hidden" id="btnFat" style="padding: 1%; margin-left: 0">
                                         <label for="">&nbsp;</label>
                                         
                                         <button class="btn btn-success"><i class="icon-white icon-money"></i> Faturar</button>
                                        
                                     </div>
                                      <?php }elseif ($result->faturado == 1){?>
-                                    <div class="alert alert-info">OS Já faturada!
+                                    <div class="alert alert-info"><strong>OS faturada!<a href="#"> <ins>Visualizar Fatura</ins></a></strong>
                                     </div>
                                     <?php } ?>
                                 </form>
@@ -612,6 +613,22 @@
                     id_marcas: id_marcas
                 }, function (data) {
                     $('#modelos').html(data);
+                });
+            });
+        });
+        
+        $(function () {
+            $('#qtparcela').change(function () {
+                $('#resultado').html("<div class='progress progress-info progress-striped active'><div class='bar' style='width: 100%'></div></div>");
+                var valor = $('#valor').val();
+                var vencimento = $('#vencimento').val();
+                var qtparcela = $('#qtparcela').val();
+                $.post("<?php echo base_url(); ?>index.php/os/geraParcela", {
+                    valor: valor,
+                    vencimento: vencimento,
+                    qtparcela: qtparcela
+                }, function (data) {
+                    $('#resultado').html(data);
                 });
             });
         });
@@ -991,6 +1008,7 @@
             if ($(this).is(':checked')) {
                 $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').addClass('hidden');
+                $('#btnFat').removeClass('hidden');
             }
         });
 
@@ -998,6 +1016,7 @@
             if ($(this).is(':checked')) {
                 $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').removeClass('hidden');
+                $('#btnFat').removeClass('hidden');
                 
             }
         });

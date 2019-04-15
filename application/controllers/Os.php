@@ -78,7 +78,7 @@ class Os extends CI_Controller {
 
         $this->pagination->initialize($config);
 
-        $this->data['results'] = $this->os_model->getOs('os', 'idOs,dataInicial,dataFinal,valorTotal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico', $where_array, $config['per_page'], $this->uri->segment(3));
+        $this->data['results'] = $this->os_model->getOs('os', 'idOs,dataInicial,dataFinal,valorTotal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico, faturado', $where_array, $config['per_page'], $this->uri->segment(3));
 
         $this->data['view'] = 'os/os';
         $this->load->view('tema/topo', $this->data);
@@ -641,6 +641,46 @@ class Os extends CI_Controller {
         }
 
         echo $option;
+    }
+    
+    public function geraParcela(){
+        $valor = $this->input->post('valor');
+        $dataVencimento = $this->input->post('vencimento');
+        $parcela = $this->input->post('qtparcela');
+        
+        $calculoValor = ($valor / $parcela);
+        $valorFormatado = number_format($calculoValor,2,',','.');
+        $dataPrimeiraParcela = explode("/",$dataVencimento);
+        $dia = $dataPrimeiraParcela[0];
+        $mes = $dataPrimeiraParcela[1];
+        $ano = $dataPrimeiraParcela[2];
+        
+        for($x = 1; $x <= $parcela; $x++){
+            $dt_parcela[$x] = date("d/m/Y", strtotime("+".$x." month",mktime(0,0,0,$mes,$dia,$ano)));
+        }
+        foreach ($dt_parcela as $indice => $datas){
+            
+            
+            $Vparcela .= "<tr><td>$indice</td><td>$valorFormatado</td><td>$datas</td></tr>";
+            
+            
+        }
+        
+        echo '<table class="table table-bordered">';
+            echo '<thead>';
+            echo '<tr>';
+            echo '<th>Parcela</th>';
+            echo '<th>Valor (R$)</th>';
+            echo '<th>Data Vencimento</th>';
+            echo '</tr>';
+            echo '</thead>';
+            echo '<tbody>';
+            echo $Vparcela;
+            echo '</tbody>';
+            echo '</table>';
+        
+        
+        
     }
 
 }

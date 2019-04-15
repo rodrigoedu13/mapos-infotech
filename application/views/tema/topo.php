@@ -129,6 +129,8 @@
                         <a href="#"><i class="icon icon-money"></i> <span>Financeiro</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
                         <ul>
                             <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Lançamentos</a></li>
+                            <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Contas a Pagar</a></li>
+                            <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Contas a Receber</a></li>
                         </ul>
                     </li>
                 <?php } ?>
