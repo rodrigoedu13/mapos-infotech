@@ -415,8 +415,8 @@
                                     <?php if ($result->faturado == 0){?>
                                     <div class="span12 well" style="padding: 1%; margin-left: 0">
 
-                                        <input type="radio" name="pagamento" id="avista"/>À vista
-                                        <input type="radio" name="pagamento" id="parcelado" />Parcelado
+                                        <input type="radio" name="avista" id="avista"/>À vista
+                                        <input type="radio" name="parcelado" id="parcelado" />Parcelado
 
                                     </div>
 
@@ -1009,6 +1009,10 @@
                 $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').addClass('hidden');
                 $('#btnFat').removeClass('hidden');
+                $('#resultado').empty();
+                
+                
+                
             }
         });
 
@@ -1017,6 +1021,7 @@
                 $('#Vavista').removeClass('hidden');
                 $('#Vparcelado').removeClass('hidden');
                 $('#btnFat').removeClass('hidden');
+                $('#resultado').removeClass('hidden');
                 
             }
         });

@@ -200,7 +200,7 @@ class Os extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
-        
+
         $this->load->model('marcas_model');
         $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
 
@@ -261,7 +261,6 @@ class Os extends CI_Controller {
         $this->data['anexos'] = $this->os_model->getAnexos($this->uri->segment(3));
         $this->data['view'] = 'os/editarOs';
         $this->load->view('tema/topo', $this->data);
-        
     }
 
     public function visualizar() {
@@ -626,7 +625,7 @@ class Os extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS2.');
+        $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS.');
         $json = array('result' => false);
         echo json_encode($json);
     }
@@ -642,45 +641,43 @@ class Os extends CI_Controller {
 
         echo $option;
     }
-    
-    public function geraParcela(){
+
+    public function geraParcela() {
         $valor = $this->input->post('valor');
         $dataVencimento = $this->input->post('vencimento');
         $parcela = $this->input->post('qtparcela');
-        
+
         $calculoValor = ($valor / $parcela);
-        $valorFormatado = number_format($calculoValor,2,',','.');
-        $dataPrimeiraParcela = explode("/",$dataVencimento);
+        $valorFormatado = number_format($calculoValor, 2, ',', '.');
+        $dataPrimeiraParcela = explode("/", $dataVencimento);
         $dia = $dataPrimeiraParcela[0];
         $mes = $dataPrimeiraParcela[1];
         $ano = $dataPrimeiraParcela[2];
+
+
         
-        for($x = 1; $x <= $parcela; $x++){
-            $dt_parcela[$x] = date("d/m/Y", strtotime("+".$x." month",mktime(0,0,0,$mes,$dia,$ano)));
+        for ($x = 1; $x <= $parcela; $x++) {
+            $dt_parcela[$x] = date("d/m/Y", strtotime("+" . $x . " month", mktime(0, 0, 0, $mes - 1, $dia, $ano)));
         }
+           
+
+
         foreach ($dt_parcela as $indice => $datas){
-            
-            
-            $Vparcela .= "<tr><td>$indice</td><td>$valorFormatado</td><td>$datas</td></tr>";
-            
-            
-        }
-        
-        echo '<table class="table table-bordered">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Parcela</th>';
-            echo '<th>Valor (R$)</th>';
-            echo '<th>Data Vencimento</th>';
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-            echo $Vparcela;
-            echo '</tbody>';
-            echo '</table>';
-        
-        
-        
+           $Vparcela .= "<tr><td>$indice</td><td>$valorFormatado</td><td>$datas</td></tr>";         
+           
+       }
+       echo '<table class="table table-bordered">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Parcela</th>';
+        echo '<th>Valor (R$)</th>';
+        echo '<th>Data Vencimento</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+        echo $Vparcela;
+        echo '</tbody>';
+        echo '</table>';
     }
 
 }
