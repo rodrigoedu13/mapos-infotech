@@ -568,13 +568,15 @@ class Os extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+        
+        $pagamento = $this->input->post('pagamento');
 
 
         if ($this->form_validation->run('receita') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
 
-
+            if ($pagamento == 'avista'){
             $vencimento = $this->input->post('vencimento');
             $recebimento = $this->input->post('recebimento');
 
@@ -601,7 +603,8 @@ class Os extends CI_Controller {
                 'cliente_fornecedor' => set_value('cliente'),
                 'forma_pgto' => $this->input->post('formaPgto'),
                 'tipo' => $this->input->post('tipo'),
-                'os_id' => $this->input->post('os_id')
+                'os_id' => $this->input->post('os_id'),
+                'tipo_pgto' => $pagamento
             );
 
             if ($this->os_model->add('lancamentos', $data) == TRUE) {
@@ -609,6 +612,7 @@ class Os extends CI_Controller {
                 $os = $this->input->post('os_id');
 
                 $this->db->set('faturado', 1);
+                $this->db->set('lancamento', $this->db->insert_id());
                 $this->db->set('valorTotal', $this->input->post('valor'));
                 $this->db->where('idOs', $os);
                 $this->db->update('os');
@@ -623,12 +627,93 @@ class Os extends CI_Controller {
                 echo json_encode($json);
                 die();
             }
+            }elseif($pagamento == 'parcelado'){
+                $os = $this->input->post('os_id');
+                $valor = $this->input->post('valor');
+                $dataVencimento = $this->input->post('vencimento');
+                $parcela = $this->input->post('qtparcela');
+
+                $calculoValor = ($valor / $parcela);
+                $valorFormatado = number_format($calculoValor, 2, ',', '.');
+                $dataPrimeiraParcela = explode("/", $dataVencimento);
+                $dia = $dataPrimeiraParcela[0];
+                $mes = $dataPrimeiraParcela[1];
+                $ano = $dataPrimeiraParcela[2];
+
+
+
+                for ($x = 1; $x <= $parcela; $x++) {
+                    $dt_parcela[$x] = date("d/m/Y", strtotime("+" . $x . " month", mktime(0, 0, 0, $mes - 1, $dia, $ano)));
+                }
+
+
+                $vencimento = $this->input->post('vencimento');
+                 $recebimento = $this->input->post('recebimento');
+
+            try {
+
+                $vencimento = explode('/', $vencimento);
+                $vencimento = $vencimento[2] . '-' . $vencimento[1] . '-' . $vencimento[0];
+
+                if ($recebimento != null) {
+                    $recebimento = explode('/', $recebimento);
+                    $recebimento = $recebimento[2] . '-' . $recebimento[1] . '-' . $recebimento[0];
+                }
+            } catch (Exception $e) {
+                $vencimento = date('Y/m/d');
+            }
+
+            $data = array(
+                'descricao' => set_value('descricao'),
+                'valor' => $this->input->post('valor'),
+                'clientes_id' => $this->input->post('clientes_id'),
+                'data_vencimento' => $vencimento,
+                'data_pagamento' => $recebimento,
+                'baixado' => $this->input->post('recebido') ?: 0,
+                'cliente_fornecedor' => set_value('cliente'),
+                'forma_pgto' => $this->input->post('formaPgto'),
+                'tipo' => $this->input->post('tipo'),
+                'os_id' => $os,
+                'tipo_pgto' => $pagamento
+            );
+
+            if ($this->os_model->add('lancamentos', $data) == TRUE) {
+
+                
+                foreach ($dt_parcela as $indice => $datas) {
+                    $datas = explode('/', $datas);
+                    $datas = $datas[2] . '-' . $datas[1] . '-' . $datas[0];
+                    $this->db->set('dataVencimento',$datas);
+                    $this->db->set('valorParcelas',$valorFormatado);
+                    $this->db->set('nrParcelas', $indice);
+                    $this->db->set('os_id', $os);
+                    $this->db->insert('parcelas');
+                }
+
+                $this->db->set('faturado', 1);
+                $this->db->set('lancamento', $this->db->insert_id());
+                $this->db->set('valorTotal', $this->input->post('valor'));
+                $this->db->where('idOs', $os);
+                $this->db->update('os');
+
+                $this->session->set_flashdata('success', 'OS faturada com sucesso!');
+                $json = array('result' => true);
+                echo json_encode($json);
+                die();
+            } else {
+                $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS.');
+                $json = array('result' => false);
+                echo json_encode($json);
+                die();
+            }
+            }
         }
 
         $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar faturar OS.');
         $json = array('result' => false);
         echo json_encode($json);
     }
+    
 
     public function buscaModelosbyMarcas() {
         $this->load->model('modelos_model');

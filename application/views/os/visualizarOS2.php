@@ -197,7 +197,7 @@ if ($result->equipamento == 'selecione') {
                                         </tr>
                                     </tbody>
                                 </table>
-                                    <?php } ?>
+                                    <?php }else{$subTotalProduto = 0;} ?>
 
                                     <?php if ($servicos != null) { ?>
                                 <table class="table table-bordered">
@@ -232,6 +232,7 @@ if ($result->equipamento == 'selecione') {
                                             echo '<td style="text-align: right;">R$ ' . number_format($subTotalServicoItem, 2, ',', '.') . '</td>';
                                             echo '</tr>';
                                         }
+                                        
                                         ?>
 
                                         <tr>
@@ -242,7 +243,7 @@ if ($result->equipamento == 'selecione') {
                                         </tr>
                                     </tbody>
                                 </table>
-<?php } ?>
+<?php }else{$subTotalServico = 0;} ?>
                             <table class="table table-bordered" style="margin-bottom: 0;">
                                 
                                 <tr>

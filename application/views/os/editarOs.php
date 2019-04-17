@@ -254,7 +254,7 @@
 
                                             <tr>
                                                 <td colspan="4" style="text-align: right"><strong>Total:</br>Desconto:</br>Subtotal:</strong></td>
-                                                <td><strong>R$: <?php echo number_format($totalProduto, 2, ',', '.'); ?></br><p class="text-error" style="margin: 0 0 0px;">R$: -<?php echo number_format($descontoTotalProduto, 2, ',', '.'); ?></p><p class="text-success" style="margin: 0 0 0px;">R$: <?php echo number_format($subTotalProduto, 2, ',', '.'); ?></p><input type="hidden" id="total-venda" value="<?php echo number_format($totalProduto, 2); ?>"></strong></td>
+                                                <td><strong>R$: <?php echo number_format($totalProduto, 2, ',', '.'); ?></br><p class="text-error" style="margin: 0 0 0px;">R$: -<?php echo number_format($descontoTotalProduto, 2, ',', '.'); ?></p><p class="text-success" style="margin: 0 0 0px;">R$: <?php echo number_format($subTotalProduto, 2, ',', '.'); ?></p><input type="hidden" id="total-venda" value="<?php echo number_format($subTotalProduto, 2); ?>"></strong></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
@@ -319,7 +319,7 @@
 
                                             <tr>
                                                 <td colspan="3" style="text-align: right"><strong>Total:</br>Desconto:</br>Subtotal:</strong></td>
-                                                <td><strong>R$: <?php echo number_format($total, 2, ',', '.'); ?></br><p class="text-error" style="margin: 0 0 0px;">R$: -<?php echo number_format($descontoTotalServico, 2, ',', '.'); ?></p><p class="text-success" style="margin: 0 0 0px;">R$: <?php echo number_format($subTotalServico, 2, ',', '.'); ?></p><input type="hidden" id="total-venda" value="<?php echo number_format($totalProduto, 2); ?>"></strong></td>
+                                                <td><strong>R$: <?php echo number_format($total, 2, ',', '.'); ?></br><p class="text-error" style="margin: 0 0 0px;">R$: -<?php echo number_format($descontoTotalServico, 2, ',', '.'); ?></p><p class="text-success" style="margin: 0 0 0px;">R$: <?php echo number_format($subTotalServico, 2, ',', '.'); ?></p><input type="hidden" id="total-servico" value="<?php echo number_format($subTotalServico, 2); ?>"></strong></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
@@ -415,8 +415,8 @@
                                     <?php if ($result->faturado == 0){?>
                                     <div class="span12 well" style="padding: 1%; margin-left: 0">
 
-                                        <input type="radio" name="avista" id="avista"/>À vista
-                                        <input type="radio" name="parcelado" id="parcelado" />Parcelado
+                                        <input type="radio" name="pagamento" id="avista" value="avista"/>À vista
+                                        <input type="radio" name="pagamento" id="parcelado" value="parcelado" />Parcelado
 
                                     </div>
 
@@ -477,7 +477,7 @@
                                        
                                     </div>
                                      <?php }elseif ($result->faturado == 1){?>
-                                    <div class="alert alert-info"><strong>OS faturada!<a href="#"> <ins>Visualizar Fatura</ins></a></strong>
+                                    <div class="alert alert-info"><strong>OS faturada!<a href="#"> <ins> Visualizar Fatura</ins></a></strong>
                                     </div>
                                     <?php } ?>
                                 </form>
@@ -644,8 +644,8 @@
             }
         });
 
-        $(document).on('click', '#btn-faturar', function (event) {
-            event.preventDefault();
+        $(document).on('click', '#btnAdicionarProduto', function (event) {
+            //event.preventDefault();
             valor = $('#total-venda').val();
             total_servico = $('#total-servico').val();
             valor = valor.replace(',', '');
@@ -927,6 +927,7 @@
                     {
                         if (data.result == true) {
                             $("#divProdutos").load("<?php echo current_url(); ?> #divProdutos");
+                            $("#divTotal").load("<?php echo current_url(); ?> #divTotal");
 
                         } else {
                             alert('Ocorreu um erro ao tentar excluir produto.');
@@ -953,6 +954,7 @@
                     {
                         if (data.result == true) {
                             $("#divServicos").load("<?php echo current_url(); ?> #divServicos");
+                            $("#divTotal").load("<?php echo current_url(); ?> #divTotal");
 
                         } else {
                             alert('Ocorreu um erro ao tentar excluir serviço.');
