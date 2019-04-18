@@ -82,6 +82,7 @@
                             <li class="<?php if (isset($menuEquipamentos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/equipamentos"><i class="icon icon-truck"></i> Equipamentos</a></li>
                             <li class="<?php if (isset($menuModelos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/modelos"><i class="icon icon-headphones"></i> Modelos</a></li>
                             <li class="<?php if (isset($menuStatus)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/status"><i class="icon icon-pushpin"></i> Status</a></li>
+                            <li class="<?php if (isset($menuFornecedores)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/fornecedores"><i class="icon icon-truck"></i> Fornecedores</a></li>
                         </ul>
                     </li>
                 
@@ -128,8 +129,16 @@
                     ?>">
                         <a href="#"><i class="icon icon-money"></i> <span>Financeiro</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
                         <ul>
-                            <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Lançamentos</a></li>
-                            <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Contas a Pagar</a></li>
+                            <li class="<?php
+                    if (isset($menuLancamentos)) {
+                        echo 'active';
+                    };
+                    ?>"><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Lançamentos</a></li>
+                            <li class="<?php
+                    if (isset($menuapagar)) {
+                        echo 'active';
+                    };
+                    ?>"><a href="<?php echo base_url() ?>index.php/financeiro/contasApagar/">Contas a Pagar</a></li>
                             <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Contas a Receber</a></li>
                         </ul>
                     </li>

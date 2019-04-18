@@ -192,13 +192,11 @@ class Financeiro extends CI_Controller {
         $this->pagination->initialize($config); 	
 
 		$this->data['results'] = $this->financeiro_model->get('lancamentos','idLancamentos,descricao,valor,data_vencimento,data_pagamento,baixado,cliente_fornecedor,tipo,forma_pgto',$where,$config['per_page'],$this->input->get('per_page'));
-       
+        $this->data['menuLancamentos'] = 'lancamento';
 	    $this->data['view'] = 'financeiro/lancamentos';
        	$this->load->view('tema/topo',$this->data);
 	}
-
-
-
+        
 	function adicionarReceita() {
 
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aLancamento')){
@@ -465,6 +463,13 @@ class Financeiro extends CI_Controller {
 
         $ate = $ano."-".$mes."-".$qtdDiasMes;
         return array($inicia, $ate);
+    }
+    
+    public function contasApagar(){
+        $this->data['results'] = $this->financeiro_model->getContasApagar();
+        $this->data['menuapagar'] = 'apagar';
+        $this->data['view'] = 'financeiro/contasApagar';
+       	$this->load->view('tema/topo',$this->data);
     }
 
 }

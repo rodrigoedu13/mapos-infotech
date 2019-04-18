@@ -334,4 +334,55 @@ $config = array('clientes' => array(array(
         'label' => 'Marca',
         'rules' => 'trim|required'
     ),
+    'fornecedores' => array(array(
+            'field' => 'nomeFornecedor',
+            'label' => 'Fornecedor',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'cnpj',
+            'label' => 'CNPJ',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'telefone',
+            'label' => 'Telefone',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'trim|valid_email'
+        ),
+        array(
+            'field' => 'rua',
+            'label' => 'Rua',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'numero',
+            'label' => 'Número',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'bairro',
+            'label' => 'Bairro',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'cidade',
+            'label' => 'Cidade',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'estado',
+            'label' => 'Estado',
+            'rules' => 'trim'
+        ),
+        array(
+            'field' => 'cep',
+            'label' => 'CEP',
+            'rules' => 'trim'
+        ))
+    ,
 );
