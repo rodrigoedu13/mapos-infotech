@@ -471,6 +471,12 @@ class Financeiro extends CI_Controller {
         $this->data['view'] = 'financeiro/contasApagar';
        	$this->load->view('tema/topo',$this->data);
     }
+    
+    public function adicionarContasApagar(){
+        $this->data['menuapagar'] = 'apagar';
+        $this->data['view'] = 'financeiro/adicionarContasApagar';
+       	$this->load->view('tema/topo',$this->data);
+    }
 
 }
 

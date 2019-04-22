@@ -23,10 +23,60 @@
 
 
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLancamento')){ ?>
-  <div class="span5" style="margin-left: 0">  
-      <a href="<?php echo base_url()?>index.php/financeiro/adicionarContasApagar" data-toggle="modal" role="button" class="btn btn-danger tip-bottom" title="Cadastrar nova despesa"><i class="icon-plus icon-white"></i> Contas a Pagar</a>
+  <div class="span2" style="margin-left: 0">  
+      <a href="<?php echo base_url()?>index.php/financeiro/adicionarContasApagar" data-toggle="modal" role="button" class="btn btn-danger"><i class="icon-plus icon-white"></i> Contas a Pagar</a>
   </div>
 <?php } ?>
+
+<div class="span10" style="margin-left: 0">
+    <form action="<?php echo current_url(); ?>" method="get" >
+        <div class="span4" style="margin-left: 0">
+            <label>Cliente/Fornecedor </label>
+            <input type="text" class="span12" name="cliforn">
+        </div>
+        <div class="span3" >
+            <label>Período <i class="icon-info-sign tip-top" title="Lançamentos com vencimento no período."></i></label>
+            <select name="periodo" class="span12">
+                <option value="dia">Dia</option>
+                <option value="semana" <?php if ($periodo == 'semana') {
+          echo 'selected';
+      } ?>>Semana</option>
+                <option value="mes" <?php if ($periodo == 'mes') {
+          echo 'selected';
+      } ?>>Mês</option>
+                <option value="ano" <?php if ($periodo == 'ano') {
+          echo 'selected';
+      } ?>>Ano</option>
+                <option value="todos" <?php if ($periodo == 'todos') {
+          echo 'selected';
+      } ?>>Todos</option>
+            </select>
+        </div>
+        <div class="span3">
+            <label>Situação <i class="icon-info-sign tip-top" title="Lançamentos com situação específica ou todos."></i></label>
+            <select name="situacao" class="span12">
+                <option value="todos">Todos</option>
+                <option value="previsto" <?php if ($situacao == 'previsto') {
+          echo 'selected';
+      } ?>>Previsto</option>
+                <option value="atrasado" <?php if ($situacao == 'atrasado') {
+          echo 'selected';
+      } ?>>Atrasado</option>
+                <option value="realizado" <?php if ($situacao == 'realizado') {
+        echo 'selected';
+    } ?>>Realizado</option>
+                <option value="pendente" <?php if ($situacao == 'pendente') {
+        echo 'selected';
+    } ?>>Pendente</option>
+            </select>
+        </div>
+        <div class="span2" >
+            &nbsp
+            <button type="submit" class="span12 btn btn-primary">Filtrar</button>
+        </div>
+
+    </form>
+</div>
 	
 
 <div class="span12" style="margin-left: 0;">
@@ -77,7 +127,7 @@ if(!$results){?>
         <span class="icon">
             <i class="icon-tags"></i>
          </span>
-        <h5>Lançamentos Financeiros</h5>
+        <h5>Lançamentos de Contas a pagar</h5>
 
      </div>
 
