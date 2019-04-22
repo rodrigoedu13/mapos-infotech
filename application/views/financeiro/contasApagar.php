@@ -162,7 +162,7 @@ if(!$results){?>
 
 </div>
 	
-<?php echo $this->pagination->create_links();}?>
+<?php }?>
 
 
 

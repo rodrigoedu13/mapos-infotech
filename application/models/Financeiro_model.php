@@ -77,6 +77,12 @@ class Financeiro_model extends CI_Model {
         }
         return $this->db->count_all_results();
     }
+    
+    function getContasApagar(){
+        $this->db->where('baixado',0);
+        $this->db->where('tipo','despesa');
+        return $this->db->get('lancamentos')->row();
+    }
 
 }
 

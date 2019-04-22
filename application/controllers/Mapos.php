@@ -44,16 +44,29 @@ class Mapos extends CI_Controller {
      
     }
 
-    public function alterarSenha($senha)
+    public function alterarSenha()
     {
-        $this->db->set('senha', password_hash($senha, PASSWORD_DEFAULT));
-        $this->db->where('idUsuarios',  $this->session->userdata('id'));
-        $this->db->update('usuarios');
-
-        if ($this->db->affected_rows() >= 0) {
-            return true;
+        if ((!session_id()) || (!$this->session->userdata('logado'))) {
+            redirect('mapos/login');
         }
-        return false;
+        $current_user = $this->mapos_model->getById($this->session->userdata('id'));
+        if (!$current_user) {
+            $this->session->set_flashdata('error', 'Ocorreu um erro ao pesquisar usuário!');
+            redirect(base_url() . 'index.php/mapos/minhaConta');
+        }
+        $oldSenha = $this->input->post('oldSenha');
+        $senha = $this->input->post('novaSenha');
+        if (!password_verify($oldSenha, $current_user->senha)) {
+            $this->session->set_flashdata('error', 'A senha atual não corresponde com a senha informada.');
+            redirect(base_url() . 'index.php/mapos/minhaConta');
+        }
+        $result = $this->mapos_model->alterarSenha($senha);
+        if ($result) {
+            $this->session->set_flashdata('success', 'Senha alterada com sucesso!');
+            redirect(base_url() . 'index.php/mapos/minhaConta');
+        }
+        $this->session->set_flashdata('error', 'Ocorreu um erro ao tentar alterar a senha!');
+        redirect(base_url() . 'index.php/mapos/minhaConta');
     }
 
     public function pesquisar() {
