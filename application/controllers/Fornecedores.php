@@ -203,5 +203,15 @@ class Fornecedores extends CI_Controller {
             redirect(base_url() . 'index.php/fornecedores/');
         }
     }
+    
+    public function autoCompleteFornecedor() {
+        
+        $term = $this->input->get('term');
+        
+        if (isset($term)) {
+            $q = strtolower($term);
+            $this->fornecedores_model->autoCompleteFornecedor($q);
+        }
+    }
 
 }

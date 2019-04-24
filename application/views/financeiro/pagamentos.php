@@ -24,7 +24,7 @@
 
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLancamento')){ ?>
   <div class="span2" style="margin-left: 0">  
-      <a href="<?php echo base_url()?>index.php/financeiro/adicionarContasApagar" data-toggle="modal" role="button" class="btn btn-danger"><i class="icon-plus icon-white"></i> Contas a Pagar</a>
+      <a href="<?php echo base_url()?>index.php/financeiro/adicionarPagamento" class="btn btn-danger"><i class="icon-plus icon-white"></i> Pagamento</a>
   </div>
 <?php } ?>
 
@@ -37,16 +37,16 @@
         <div class="span3" >
             <label>Período <i class="icon-info-sign tip-top" title="Lançamentos com vencimento no período."></i></label>
             <select name="periodo" class="span12">
-                <option value="dia">Dia</option>
+                <option value="dia">Hoje</option>
                 <option value="semana" <?php if ($periodo == 'semana') {
           echo 'selected';
-      } ?>>Semana</option>
+      } ?>>Esta Semana</option>
                 <option value="mes" <?php if ($periodo == 'mes') {
           echo 'selected';
-      } ?>>Mês</option>
+      } ?>>Este Mês</option>
                 <option value="ano" <?php if ($periodo == 'ano') {
           echo 'selected';
-      } ?>>Ano</option>
+      } ?>>Este Ano</option>
                 <option value="todos" <?php if ($periodo == 'todos') {
           echo 'selected';
       } ?>>Todos</option>

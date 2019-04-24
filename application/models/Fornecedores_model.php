@@ -82,5 +82,18 @@ class Fornecedores_model extends CI_Model {
         $this->db->limit(1);
         return $this->db->get('lancamentos')->result();
     }
+    
+    public function autoCompleteFornecedor($q){
+
+        $this->db->select('*');
+        $this->db->like('nomeFornecedor', $q);
+        $query = $this->db->get('fornecedores');
+        if($query->num_rows() > 0){
+            foreach ($query->result_array() as $row){
+                $row_set[] = array('label'=>$row['nomeFornecedor'], 'id'=>$row['idFornecedor']);
+            }
+            echo json_encode($row_set);
+        }
+    }
 
 }

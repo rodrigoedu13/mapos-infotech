@@ -465,16 +465,77 @@ class Financeiro extends CI_Controller {
         return array($inicia, $ate);
     }
     
-    public function contasApagar(){
+    public function Pagamentos(){
         $this->data['results'] = $this->financeiro_model->getContasApagar();
-        $this->data['menuapagar'] = 'apagar';
-        $this->data['view'] = 'financeiro/contasApagar';
+        $this->data['menuapagamento'] = 'pagamento';
+        $this->data['view'] = 'financeiro/pagamentos';
        	$this->load->view('tema/topo',$this->data);
     }
     
-    public function adicionarContasApagar(){
-        $this->data['menuapagar'] = 'apagar';
-        $this->data['view'] = 'financeiro/adicionarContasApagar';
+    public function adicionarPagamento(){
+        
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'aLancamento')){
+           $this->session->set_flashdata('error','Você não tem permissão para adicionar lançamentos.');
+           redirect(base_url());
+        }
+
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+        
+        if ($this->form_validation->run('despesa') == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        } else {
+
+
+            $vencimento = $this->input->post('dtVencimento');
+            $recebimento = $this->input->post('dtPagamento');
+
+            if($recebimento != null){
+                $recebimento = explode('/', $recebimento);
+                $recebimento = $recebimento[2].'-'.$recebimento[1].'-'.$recebimento[0];
+            }
+
+            if($vencimento == null){
+                $vencimento = date('d/m/Y');
+            }
+            
+            try {
+                
+                $vencimento = explode('/', $vencimento);
+                $vencimento = $vencimento[2].'-'.$vencimento[1].'-'.$vencimento[0];   
+
+            } catch (Exception $e) {
+               $vencimento = date('Y/m/d'); 
+            }
+
+            $valor = $this->input->post('valor');
+
+            if(!validate_money($valor)){
+                $valor = str_replace(array(',','.'), array('',''), $valor);
+            }
+
+            $data = array(
+                'descricao' => set_value('descricao'),
+				'valor' => $valor,
+				'data_vencimento' => $vencimento,
+				'data_pagamento' => $recebimento != null ? $recebimento : date('Y-m-d'),
+				'baixado' => $this->input->post('recebido') ? : 0,
+				'cliente_fornecedor' => set_value('cliente'),
+				'forma_pgto' => $this->input->post('formaPgto'),
+				'tipo' => set_value('tipo')
+            );
+
+            if ($this->financeiro_model->add('lancamentos',$data) == TRUE) {
+                $this->session->set_flashdata('success','Receita adicionada com sucesso!');
+                redirect($urlAtual);
+            } else {
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
+            }
+        }
+
+        
+        $this->data['menuapagamento'] = 'pagamento';
+        $this->data['view'] = 'financeiro/adicionarPagamento';
        	$this->load->view('tema/topo',$this->data);
     }
 

@@ -135,11 +135,12 @@
                     };
                     ?>"><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Lançamentos</a></li>
                             <li class="<?php
-                    if (isset($menuapagar)) {
+                    if (isset($menuapagamento)) {
                         echo 'active';
                     };
-                    ?>"><a href="<?php echo base_url() ?>index.php/financeiro/contasApagar/">Contas a Pagar</a></li>
-                            <li><a href="<?php echo base_url() ?>index.php/financeiro/lancamentos">Contas a Receber</a></li>
+                    ?>"><a href="<?php echo base_url() ?>index.php/financeiro/pagamentos/">Contas a Pagar</a></li>
+                            <li><a href="<?php echo base_url() ?>index.php/financeiro/recebimentos">Contas a Receber</a></li>
+                            <li><a href="<?php echo base_url() ?>index.php/financeiro/fluxo">Fluxo de Caixa</a></li>
                         </ul>
                     </li>
                 <?php } ?>
