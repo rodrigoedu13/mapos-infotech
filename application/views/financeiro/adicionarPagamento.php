@@ -41,7 +41,7 @@
                         <div class="span2">
                             <label for="valor" class="control-label">Valor:<span class="required">*</span></label>
                             <div class="control-group">
-                            <input id="valor" class="span12" type="text" name="valor" value=""  />
+                            <input id="valor" class="span12 money" type="text" name="valor" value=""  />
                         </div>
                         </div>
                         <div class="span2">

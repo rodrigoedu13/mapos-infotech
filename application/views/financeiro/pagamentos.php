@@ -184,6 +184,16 @@ if(!$results){?>
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLancamento')){
                 echo '<a href="#modalExcluir" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" class="btn btn-danger tip-top excluir" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
             }
+            
+            echo '<div class="btn-group" style="margin-left: 1%">
+              <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a href="#">Confirmar recebimento</a></li>
+                <li><a href="#">Cancelar recebimento</a></li>
+                <li><a href="#">Imprimir</a></li>
+                
+              </ul>
+            </div>';
                      
             echo '</td>';
             echo '</tr>';

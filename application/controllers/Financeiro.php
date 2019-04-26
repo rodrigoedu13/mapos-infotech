@@ -515,19 +515,19 @@ class Financeiro extends CI_Controller {
             }
 
             $data = array(
-                'descricao' => set_value('descricao'),
+                'descricao' => set_value('dsPagamento'),
 				'valor' => $valor,
 				'data_vencimento' => $vencimento,
-				'data_pagamento' => $recebimento != null ? $recebimento : date('Y-m-d'),
-				'baixado' => $this->input->post('recebido') ? : 0,
-				'cliente_fornecedor' => set_value('cliente'),
+				'data_pagamento' => $recebimento != null ? $recebimento : '',
+				'baixado' => $this->input->post('pago') ? : 0,
+				'fornecedor_id' => set_value('fornecedor'),
 				'forma_pgto' => $this->input->post('formaPgto'),
-				'tipo' => set_value('tipo')
+				'tipo' => 'despesa'
             );
 
             if ($this->financeiro_model->add('lancamentos',$data) == TRUE) {
-                $this->session->set_flashdata('success','Receita adicionada com sucesso!');
-                redirect($urlAtual);
+                $this->session->set_flashdata('success','Pagamento adicionado com sucesso!');
+                redirect('financeiro/pagamentos');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
             }

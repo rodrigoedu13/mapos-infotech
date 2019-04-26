@@ -263,18 +263,8 @@ $config = array('clientes' => array(array(
         ))
     ,
     'despesa' => array(array(
-            'field' => 'descricao',
+            'field' => 'dsPagamento',
             'label' => 'Descrição',
-            'rules' => 'required|trim'
-        ),
-        array(
-            'field' => 'valor',
-            'label' => 'Valor',
-            'rules' => 'required|trim'
-        ),
-        array(
-            'field' => 'vencimento',
-            'label' => 'Data Vencimento',
             'rules' => 'required|trim'
         ),
         array(
@@ -283,10 +273,16 @@ $config = array('clientes' => array(array(
             'rules' => 'required|trim'
         ),
         array(
-            'field' => 'tipo',
-            'label' => 'Tipo',
+            'field' => 'valor',
+            'label' => 'Valor',
             'rules' => 'required|trim'
-        ))
+        ),
+        array(
+            'field' => 'dtVencimento',
+            'label' => 'Data Vencimento',
+            'rules' => 'required|trim'
+        ),
+        )
     ,
     'vendas' => array(array(
             'field' => 'dataVenda',
