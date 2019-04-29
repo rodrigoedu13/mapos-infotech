@@ -56,7 +56,7 @@ if (!$results) { ?>
                     <th>Data Inicial</th>
                     <th>Data Final</th>
                     <th>Valor Total</th>
-                    <th>Status</th>
+                    <th>Situação</th>
                     <th>Ações</th>
                     
                 </tr>
@@ -90,7 +90,7 @@ if (!$results) { ?>
                     <th>Data Inicial</th>
                     <th>Data Final</th>
                     <th>Valor Total</th>
-                    <th>Status</th>
+                    <th>Situação</th>
                     <th>Faturado</th>
                     <th>Ações</th>
                     

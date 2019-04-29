@@ -99,8 +99,8 @@ if(!$results){?>
 <table class="table table-bordered ">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
-            <th>Tipo</th>
+            <th>Código</th>
+            
             <th>Cliente / Fornecedor</th>
             <th>Descrição</th>
 	    <th>Vencimento</th>
@@ -137,8 +137,8 @@ if(!$results){?>
 <table class="table table-bordered " id="divLancamentos">
     <thead>
         <tr style="backgroud-color: #2D335B">
-            <th>#</th>
-            <th>Tipo</th>
+            <th>Código</th>
+           
             <th>Cliente / Fornecedor</th>
             <th>Descrição</th>
 	    <th>Vencimento</th>
@@ -164,17 +164,22 @@ if(!$results){?>
             }else{
                 $pagamento = date(('d/m/Y'),strtotime($r->data_pagamento));
             }
+            if ($r->cliente_fornecedor != null){
+                $fornecedor = $r->cliente_fornecedor;
+            }else{
+                $fornecedor = $r->nomeFornecedor;
+            }
             
-            if($r->baixado == 0){$status = 'Pendente';}else{ $status = 'Pago';};
-            if($r->tipo == 'receita'){ $label = 'success'; $totalReceita += $r->valor;} else{$label = 'important'; $totalDespesa += $r->valor;}
+            if($r->baixado == 0 and $r->data_vencimento >= date('Y-m-d')){$status = 'Em aberto'; $slabel = 'default';}elseif($r->baixado == 1){ $status = 'Pago';$slabel = 'success';}elseif($r->baixado == 0 and $r->data_vencimento < date('Y-m-d')){$status = 'Atrasado';$slabel = 'important';};
+            if($r->tipo == 'despesa'){$totalDespesa += $r->valor;}
             echo '<tr>'; 
             echo '<td>'.$r->idLancamentos.'</td>';
-            echo '<td><span class="label label-'.$label.'">'.ucfirst($r->tipo).'</span></td>';
-            echo '<td>'.$r->cliente_fornecedor.'</td>';
+            
+            echo '<td>'.$fornecedor.'</td>';
 	    echo '<td>'.$r->descricao.'</td>';	
             echo '<td>'.$vencimento.'</td>';   
             echo '<td>'.$pagamento.'</td>';   
-            echo '<td>'.$status.'</td>';
+            echo '<td><span class="badge badge-'.$slabel.'">'.ucfirst($status).'</span></td>';
             echo '<td> R$ '.number_format($r->valor,2,',','.').'</td>';
             
             echo '<td>';
@@ -188,9 +193,9 @@ if(!$results){?>
             echo '<div class="btn-group" style="margin-left: 1%">
               <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li><a href="#">Confirmar recebimento</a></li>
-                <li><a href="#">Cancelar recebimento</a></li>
-                <li><a href="#">Imprimir</a></li>
+                <li><a href="#"><i class="icon-ok"></i>Confirmar Pagamento</a></li>
+                <li><a href="#"><i class="icon-remove"></i>Cancelar pagamento</a></li>
+                <li><a href="#"><i class="icon-print"></i>Imprimir</a></li>
                 
               </ul>
             </div>';

@@ -81,7 +81,7 @@
                                 <li class="<?php if (isset($menuMarcas)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/marcas"><i class="icon icon-tag"></i> Marcas</a></li>
                             <li class="<?php if (isset($menuEquipamentos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/equipamentos"><i class="icon icon-truck"></i> Equipamentos</a></li>
                             <li class="<?php if (isset($menuModelos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/modelos"><i class="icon icon-headphones"></i> Modelos</a></li>
-                            <li class="<?php if (isset($menuStatus)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/status"><i class="icon icon-pushpin"></i> Status</a></li>
+                            <li class="<?php if (isset($menuStatus)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/situacao"><i class="icon icon-pushpin"></i> Situação</a></li>
                             <li class="<?php if (isset($menuFornecedores)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/fornecedores"><i class="icon icon-truck"></i> Fornecedores</a></li>
                         </ul>
                     </li>
@@ -95,6 +95,14 @@
                         echo 'active';
                     };
                     ?>"><a href="<?php echo base_url() ?>index.php/servicos"><i class="icon icon-wrench"></i> <span>Serviços</span></a></li>
+                    <?php } ?>
+                    
+                    <?php if ($this->permission->checkPermission($this->session->userdata('permissao'), 'vServico')) { ?>
+                    <li class="<?php
+                    if (isset($menuCompras)) {
+                        echo 'active';
+                    };
+                    ?>"><a href="<?php echo base_url() ?>index.php/compras"><i class="icon icon-briefcase"></i> <span>Compras</span></a></li>
                     <?php } ?>
 
                 <?php if ($this->permission->checkPermission($this->session->userdata('permissao'), 'vOs')) { ?>

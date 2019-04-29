@@ -79,8 +79,9 @@ class Financeiro_model extends CI_Model {
     }
     
     function getContasApagar(){
-        $this->db->where('baixado',0);
+        //$this->db->where('baixado',0);
         $this->db->where('tipo','despesa');
+        $this->db->join('fornecedores','fornecedores.idFornecedor = lancamentos.fornecedor_id','left');
         $query = $this->db->get('lancamentos');
         return $query->result();
     }

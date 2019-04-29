@@ -10,11 +10,9 @@
                 <h5>Cadastro de Contas a Pagar</h5>
             </div>
             <div class="widget-content nopadding">
-               <?php
-                if ($custom_error != '') {
-                    echo '<div class="alert alert-danger">' . $custom_error . '</div>';
-                }
-                ?>
+              <?php if ($custom_error == true) { ?>
+                                    <div class="span12 alert alert-danger" id="divInfo" style="padding: 1%;">Dados incompletos, verifique os campos com asterisco ou se selecionou corretamente cliente e responsável.</div>
+                                <?php } ?>
                 <form action="<?php echo current_url(); ?>" id="formPagamento" method="post" >
                     <div class="span12" style="padding: 1%">
                         <div class="span6">
