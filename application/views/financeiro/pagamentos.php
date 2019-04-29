@@ -184,22 +184,24 @@ if(!$results){?>
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
-                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" cliente="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
+                echo '<a href=" ' . base_url('index.php/pagamentos/editar/') . $r->idLancamentos. '" style="margin-right: 1%" role="button" class="btn btn-mini btn-info tip-top" title="Editar Pagamento"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLancamento')){
-                echo '<a href="#modalExcluir" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" class="btn btn-danger tip-top excluir" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
+                echo '<a href="#modalExcluir" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" class="btn btn-danger tip-top btn-mini" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
             }
             
             echo '<div class="btn-group" style="margin-left: 1%">
-              <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-ok"></i>Confirmar Pagamento</a></li>
-                <li><a href="#"><i class="icon-remove"></i>Cancelar pagamento</a></li>
-                <li><a href="#"><i class="icon-print"></i>Imprimir</a></li>
+              <button data-toggle="dropdown" class="btn btn-mini btn-success dropdown-toggle"><span class="caret"></span></button>
+              <ul class="dropdown-menu pull-right">';
+            if ($r->baixado == 0){
+               echo ' <li><a href="#modalConfPagamento" data-toggle="modal" role="button" class="confirmar" idLancamento="'.$r->idLancamentos.'" valor="'. $r->valor.'" dtPagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" formaPgto="'.$r->forma_pgto.'"><i class="icon-ok"></i>Confirmar Pagamento</a></li>';
+            }else{
+                echo '<li><a href="#modalCancPagamento"><i class="icon-remove"></i>Cancelar pagamento</a></li>';
+            }
+             echo '   <li><a href="#"><i class="icon-print"></i>Imprimir</a></li>
                 
               </ul>
-            </div>';
-                     
+            </div> ';                    
             echo '</td>';
             echo '</tr>';
         }?>
@@ -207,20 +209,6 @@ if(!$results){?>
             
         </tr>
     </tbody>
-    <tfoot>
-    	<tr>
-    		<td colspan="7" style="text-align: right; color: green"> <strong>Total Receitas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: green"><strong>R$ <?php echo number_format($totalReceita,2,',','.') ?></strong></td>
-    	</tr>
-    	<tr>
-    		<td colspan="7" style="text-align: right; color: red"> <strong>Total Despesas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: red"><strong>R$ <?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
-    	</tr>
-    	<tr>
-    		<td colspan="7" style="text-align: right"> <strong>Saldo:</strong></td>
-    		<td colspan="2" style="text-align: left;"><strong>R$ <?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
-    	</tr>
-    </tfoot>
 </table>
 </div>
 </div>
@@ -228,6 +216,50 @@ if(!$results){?>
 </div>
 	
 <?php }?>
+
+<!-- Modal confirmar Pagamento -->
+<div id="modalConfPagamento" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form id="formConfPagamento" action="<?php echo base_url() ?>index.php/financeiro/ConfirmarPagamento" method="post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Confirmar Pagamento</h3>
+  </div>
+  <div class="modal-body">
+      <div class="span12 alert alert-info" style="margin-left: 0"> Obrigatório o preenchimento dos campos com asterisco.</div>
+
+      <div class="span12" style="margin-left: 0"> 
+        <div class="span4" style="margin-left: 0">  
+            <label for="valor">Valor<span class="required">*</span></label>
+          <input type="hidden"  id="idConf" name="id" value="" /> 
+          <input id="urlAtual" type="hidden" name="urlAtual" value=""  />
+          <input class="span12 money"  type="text" name="valor" id="valorConf" />
+        </div>
+        <div class="span4" >
+          <label for="pagamento">Data de Pagamento<span class="required">*</span></label>
+          <input class="span12 datepicker"  type="text" name="pagamento" autocomplete="off" id="dtPagamentoConf" />
+        </div>
+        <div class="span4">
+          <label for="formaPgto">Forma de Pagamento<span class="required">*</span></label>
+          <select name="formaPgto" id="formaPgto"  class="span12">
+              <option value="Dinheiro">Dinheiro</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Boleto">Boleto</option>
+              <option value="Depósito">Depósito</option>
+              <option value="Débito">Débito</option>  			
+          </select>
+        </div>
+        
+        
+      </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnCancelarEditar">Cancelar</button>
+    <button class="btn btn-primary">Confirmar</button>
+  </div>
+  </form>
+</div>
 
 
 
@@ -290,39 +322,20 @@ if(!$results){?>
     });
 
 
-		$("#formReceita").validate({
+		$("#formConfPagamento").validate({
           rules:{
-             descricao: {required:true},
-             cliente: {required:true},
-             valor: {required:true},
-             vencimento: {required:true}
+             valorConf: {required:true},
+             dtVencimentoConf: {required:true},
+             formaPgto: {required:true}
       
           },
           messages:{
-             descricao: {required: 'Campo Requerido.'},
-             cliente: {required: 'Campo Requerido.'},
-             valor: {required: 'Campo Requerido.'},
-             vencimento: {required: 'Campo Requerido.'}
+             valorConf: {required: 'Campo Requerido.'},
+             dtVencimentoConf: {required: 'Campo Requerido.'},
+             formaPgto: {required: 'Campo Requerido.'}
           }
     });
 
-
-
-		$("#formDespesa").validate({
-          rules:{
-             descricao: {required:true},
-             fornecedor: {required:true},
-             valor: {required:true},
-             vencimento: {required:true}
-      
-          },
-          messages:{
-             descricao: {required: 'Campo Requerido.'},
-             fornecedor: {required: 'Campo Requerido.'},
-             valor: {required: 'Campo Requerido.'},
-             vencimento: {required: 'Campo Requerido.'}
-          }
-       	});
     
 
     $(document).on('click', '.excluir', function(event) {
@@ -330,25 +343,12 @@ if(!$results){?>
     });
 
 
-    $(document).on('click', '.editar', function(event) {
-      $("#idEditar").val($(this).attr('idLancamento'));
-      $("#descricaoEditar").val($(this).attr('descricao'));
-      $("#fornecedorEditar").val($(this).attr('cliente'));
-      $("#valorEditar").val($(this).attr('valor'));
-      $("#vencimentoEditar").val($(this).attr('vencimento'));
-      $("#pagamentoEditar").val($(this).attr('pagamento'));
-      $("#formaPgtoEditar").val($(this).attr('formaPgto'));
-      $("#tipoEditar").val($(this).attr('tipo'));
-      $("#urlAtualEditar").val($(location).attr('href'));
-      var baixado = $(this).attr('baixado');
-      if(baixado == 1){
-        $("#pagoEditar").attr('checked', true);
-        $("#divPagamentoEditar").show();
-      }
-      else{
-        $("#pagoEditar").attr('checked', false); 
-        $("#divPagamentoEditar").hide();
-      }
+    $(document).on('click', '.confirmar', function(event) {
+      $("#idConf").val($(this).attr('idLancamento'));
+      $("#valorConf").val($(this).attr('valor'));
+      $("#dtPagamentoConf").val($(this).attr('dtPagamento'));
+      $("#formaPgto").val($(this).attr('formaPgto')); 
+      $("#urlAtual").val($(location).attr('href'));
       
 
     });

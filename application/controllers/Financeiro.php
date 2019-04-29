@@ -538,6 +538,60 @@ class Financeiro extends CI_Controller {
         $this->data['view'] = 'financeiro/adicionarPagamento';
        	$this->load->view('tema/topo',$this->data);
     }
+    
+    public function confirmarPagamento(){
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar lançamentos.');
+           redirect(base_url());
+        }
+
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+        $urlAtual = $this->input->post('urlAtual');
+
+        $this->form_validation->set_rules('valor', '', 'trim|required');
+        $this->form_validation->set_rules('vencimento', '', 'trim|required');
+        $this->form_validation->set_rules('formaPgto', '', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        } else {
+
+            $vencimento = $this->input->post('vencimento');
+            $pagamento = $this->input->post('pagamento');
+
+            try {
+                
+                $vencimento = explode('/', $vencimento);
+                $vencimento = $vencimento[2].'-'.$vencimento[1].'-'.$vencimento[0];
+
+                $pagamento = explode('/', $pagamento);
+                $pagamento = $pagamento[2].'-'.$pagamento[1].'-'.$pagamento[0];
+
+            } catch (Exception $e) {
+               $vencimento = date('Y/m/d'); 
+            }
+
+            $data = array(
+                
+                'valor' => $this->input->post('valor'),
+                'data_pagamento' => $pagamento,
+                'baixado' => 1,
+                'forma_pgto' => $this->input->post('formaPgto'),
+            );
+
+            if ($this->financeiro_model->edit('lancamentos',$data,'idLancamentos',$this->input->post('id')) == TRUE) {
+                $this->session->set_flashdata('success','Pagamento confirmado com sucesso!');
+                redirect($urlAtual);
+            } else {
+                $this->session->set_flashdata('error','Ocorreu um erro ao tentar confirmar o pagamento err1!');
+                redirect($urlAtual);
+            }
+        }
+
+        $this->session->set_flashdata('error','Ocorreu um erro ao tentar confirmar o pagamento. err2');
+        redirect($urlAtual);
+    }
 
 }
 

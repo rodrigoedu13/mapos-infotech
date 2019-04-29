@@ -268,7 +268,7 @@ $config = array('clientes' => array(array(
             'rules' => 'required|trim'
         ),
         array(
-            'field' => 'fornecedor',
+            'field' => 'fornecedor_id',
             'label' => 'Fornecedor',
             'rules' => 'required|trim'
         ),
