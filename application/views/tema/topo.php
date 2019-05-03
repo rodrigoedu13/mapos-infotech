@@ -81,7 +81,7 @@
                                 <li class="<?php if (isset($menuMarcas)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/marcas"><i class="icon icon-tag"></i> Marcas</a></li>
                             <li class="<?php if (isset($menuEquipamentos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/equipamentos"><i class="icon icon-truck"></i> Equipamentos</a></li>
                             <li class="<?php if (isset($menuModelos)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/modelos"><i class="icon icon-headphones"></i> Modelos</a></li>
-                            <li class="<?php if (isset($menuStatus)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/situacao"><i class="icon icon-pushpin"></i> Situação</a></li>
+                            <li class="<?php if (isset($menuSituacoes)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/situacoes"><i class="icon icon-pushpin"></i> Situação</a></li>
                             <li class="<?php if (isset($menuFornecedores)) {echo 'active';}?>"><a href="<?php echo base_url() ?>index.php/fornecedores"><i class="icon icon-truck"></i> Fornecedores</a></li>
                         </ul>
                     </li>

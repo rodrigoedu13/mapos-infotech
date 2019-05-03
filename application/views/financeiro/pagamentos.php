@@ -194,7 +194,7 @@ if(!$results){?>
               <button data-toggle="dropdown" class="btn btn-mini btn-success dropdown-toggle"><span class="caret"></span></button>
               <ul class="dropdown-menu pull-right">';
             if ($r->baixado == 0){
-               echo ' <li><a href="#modalConfPagamento" data-toggle="modal" role="button" class="confirmar" idLancamento="'.$r->idLancamentos.'" valor="'. $r->valor.'" dtPagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" formaPgto="'.$r->forma_pgto.'"><i class="icon-ok"></i>Confirmar Pagamento</a></li>';
+               echo ' <li><a href="#modalConfPagamento" data-toggle="modal" role="button" class="confirmar" idLancamento="'.$r->idLancamentos.'" valor="'. $r->valor.'" dtPagamento="'.$pagamento.'" formaPgto="'.$r->forma_pgto.'"><i class="icon-ok"></i>Confirmar Pagamento</a></li>';
             }else{
                 echo '<li><a href="#modalCancPagamento"><i class="icon-remove"></i>Cancelar pagamento</a></li>';
             }

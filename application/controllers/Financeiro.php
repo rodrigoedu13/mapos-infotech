@@ -550,7 +550,7 @@ class Financeiro extends CI_Controller {
         $urlAtual = $this->input->post('urlAtual');
 
         $this->form_validation->set_rules('valor', '', 'trim|required');
-        $this->form_validation->set_rules('vencimento', '', 'trim|required');
+        $this->form_validation->set_rules('pagamento', '', 'trim|required');
         $this->form_validation->set_rules('formaPgto', '', 'trim|required');
 
         if ($this->form_validation->run() == false) {
