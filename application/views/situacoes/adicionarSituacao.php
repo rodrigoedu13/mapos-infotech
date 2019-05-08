@@ -24,7 +24,10 @@
                      <div class="control-group">
                         <label for="cor" class="control-label">Cor<span class="required">*</span></label>
                         <div class="controls">
-                            <input type="text" data-color="#ffffff" value="#ffffff" class="colorpicker input-big">
+                            <div data-color-format="hex" data-color="#000000"  class="input-append color colorpicker">
+                                <input  id="cor" type="text" value="#000000" class="span11">
+                                <span class="add-on"><i style="background-color: #000000"></i></span> 
+                            </div>
                         </div>
                     </div>
                     <div class="form-actions">
@@ -44,19 +47,23 @@
      </div>
 </div>
 
-<script src="<?php echo base_url()?>assets/js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>assets/js/jquery.validate.js"></script>
 <script src="<?php echo base_url();?>assets/js/maskmoney.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/bootstrap-colorpicker.js'); ?>"></script>
+<script src="<?php echo base_url();?>assets/js/bootstrap-colorpicker.js"></script>
+
+
 <script type="text/javascript">
     $(document).ready(function(){
         $(".money").maskMoney();
 
         $('#formMarca').validate({
             rules :{
-                  marca: { required: true}
+                  situacao: { required: true},
+                  cor: { required: true}
             },
             messages:{
-                  marca: { required: 'Campo Requerido.'}
+                  situacao: { required: 'Campo Requerido.'},
+                  cor: { required: 'Campo Requerido.'}
             },
 
             errorClass: "help-inline",

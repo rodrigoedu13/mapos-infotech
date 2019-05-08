@@ -12,6 +12,7 @@
         <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fullcalendar.css" /> 
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/select2.css" /> 
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/colorpicker.css" /> 
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
         <script type="text/javascript"  src="<?php echo base_url(); ?>assets/js/jquery-1.10.2.min.js"></script>
@@ -259,6 +260,7 @@
 
         <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script> 
         <script src="<?php echo base_url(); ?>assets/js/matrix.js"></script>
+        
 
     </body>
 </html>
