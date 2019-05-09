@@ -17,6 +17,8 @@ class Situacoes extends CI_Controller {
         $this->load->model('situacoes_model', '', TRUE);
         $this->data['menuSituacoes'] = 'Situacoes';
         $this->data['menuCadastros'] = 'Cadastros';
+        
+$this->output->enable_profiler(TRUE);
     }
 
     function index() {
@@ -40,6 +42,7 @@ class Situacoes extends CI_Controller {
 
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+        
 
         if ($this->form_validation->run('situacoes') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
@@ -63,10 +66,10 @@ class Situacoes extends CI_Controller {
 
     function editar() {
 
-        if (!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))) {
-            $this->session->set_flashdata('error', 'Item não pode ser encontrado, parâmetro não foi passado corretamente.');
-            redirect('mapos');
-        }
+//        if (!$this->uri->segment(3) || !is_numeric($this->uri->segment(3))) {
+//            $this->session->set_flashdata('error', 'Item não pode ser encontrado, parâmetro não foi passado corretamente.');
+//            redirect('mapos');
+//        }
 
         if (!$this->permission->checkPermission($this->session->userdata('permissao'), 'eProduto')) {
             $this->session->set_flashdata('error', 'Você não tem permissão para editar produtos.');
@@ -74,28 +77,31 @@ class Situacoes extends CI_Controller {
         }
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
+        $id = $this->input->get('status');
 
-        if ($this->form_validation->run('marcas') == false) {
+        if ($this->form_validation->run('situacoes') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $marca = $this->input->post('marca');
             $situacao = $this->input->post('situacao');
+            $cor = $this->input->post('cor');
+            $ativo = $this->input->post('ativo');
             $data = array(
-                'marca' => $this->input->post('marca'),
-                'situacao' => $this->input->post('situacao')
+                'idSituacao' => $this->input->post('situacao'),
+                'cor' => $this->input->post('cor'),
+                'ativo' => $this->input->post('ativo')
             );
 
-            if ($this->marcas_model->edit('marcas', $data, 'idMarcas', $this->input->post('idMarcas')) == TRUE) {
-                $this->session->set_flashdata('success', 'Marca editada com sucesso!');
-                redirect(base_url() . 'index.php/marcas/editar/' . $this->input->post('idMarcas'));
+            if ($this->situacoes_model->edit('situacoes', $data, 'idSituacao', $this->input->post('idSituacao')) == TRUE) {
+                $this->session->set_flashdata('success', 'Situação editada com sucesso!');
+                redirect(base_url() . 'index.php/situacoes/editar?status=' . $this->input->post('idSituacao'));
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured</p></div>';
             }
         }
 
-        $this->data['result'] = $this->marcas_model->getById($this->uri->segment(3));
+        $this->data['result'] = $this->situacoes_model->getById($id);
 
-        $this->data['view'] = 'marcas/editarMarca';
+        $this->data['view'] = 'situacoes/editarSituacao';
         $this->load->view('tema/topo', $this->data);
     }
 

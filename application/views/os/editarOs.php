@@ -46,41 +46,17 @@
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value="<?php echo $result->usuarios_id ?>"  />
                                         </div>
                                     </div>
+                                    
                                     <div class="span12" style="padding: 1%; margin-left: 0">
-                                        <div class="span3 control-group">
-                                            <label for="status">Status<span class="required">*</span></label>
-                                            <select class="span12" name="status" id="status" value="">
-                                                <option <?php
-                                    if ($result->status == 'Orçamento') {
-                                        echo 'selected';
-                                    }
-                                    ?> value="Orçamento">Orçamento</option>
-                                                <option <?php
-                                                if ($result->status == 'Aberto') {
-                                                    echo 'selected';
-                                                }
-                                    ?> value="Aberto">Aberto</option>
-                                                <option <?php
-                                                if ($result->status == 'Faturado') {
-                                                    echo 'selected';
-                                                }
-                                    ?> value="Faturado">Faturado</option>
-                                                <option <?php
-                                                if ($result->status == 'Em Andamento') {
-                                                    echo 'selected';
-                                                }
-                                    ?> value="Em Andamento">Em Andamento</option>
-                                                <option <?php
-                                                if ($result->status == 'Finalizado') {
-                                                    echo 'selected';
-                                                }
-                                    ?> value="Finalizado">Finalizado</option>
-                                                <option <?php
-                                                if ($result->status == 'Cancelado') {
-                                                    echo 'selected';
-                                                }
-                                    ?> value="Cancelado">Cancelado</option>
-                                            </select>
+                                        <div class="span3">
+                                            <label for="equipamento">Situação<span class="required">*</span></label>
+                                            <?php
+                                            $js = array(
+                                                'class' => 'span12'
+                                            );
+                                            $options = array($result->status => $result->status) + $situacao;
+                                            echo form_dropdown('status', $options, 0, $js);
+                                            ?>
                                         </div>
                                         <div class="span2 control-group">
                                             <label for="dataInicial">Data Inicial<span class="required">*</span></label>

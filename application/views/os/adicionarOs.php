@@ -58,8 +58,14 @@
                                         </div>
                                     </div>
                                     
+                                    
+                                    
                                     <div class="span12" style="padding: 1%; margin-left: 0">
-                                        <div class="span3">
+                                        <div class="span3" >
+                                            <label for="status">Situação<span class="required">*</span></label>
+                                            <?php echo form_dropdown($name = 'status', $options = $situacao); ?>
+                                        </div>
+<!--                                        <div class="span3">
                                             <label for="status">Status<span class="required">*</span></label>
                                             <select class="span12" name="status" id="status" value="">
                                                 <option value="Orçamento">Orçamento</option>
@@ -68,7 +74,7 @@
                                                 <option value="Finalizado">Finalizado</option>
                                                 <option value="Cancelado">Cancelado</option>
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <div class="span3">
                                             <label for="dataInicial">Data Inicial<span class="required">*</span></label>
                                             <input id="dataInicial" class="span12 datepicker" type="text" name="dataInicial" value="<?php echo date('d/m/Y'); ?>"  />

@@ -73,12 +73,12 @@
                                     <?php
                                 if ($this->permission->checkPermission($this->session->userdata('permissao'), 'eProduto')) {
                                     ?>
-                                    <a href="<?php echo base_url('index.php/situacao/editar/') . $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Marca"><i class="icon-pencil icon-white"></i></a>
+                                    <a href="<?php echo base_url('index.php/situacoes/editar?status=') . $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Situação"><i class="icon-pencil icon-white"></i></a>
                                     <?php
                                 }
                                 if ($this->permission->checkPermission($this->session->userdata('permissao'), 'dProduto')) {
                                     ?>
-                                    <a href="#modal-excluir" role="button" data-toggle="modal" situacao="<?= $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Marca"><i class="icon-remove icon-white"></i></a>
+                                    <a href="#modal-excluir" role="button" data-toggle="modal" situacao="<?= $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Situação"><i class="icon-remove icon-white"></i></a>
                                 <?php } ?>
                             </td>
                         </tr> 

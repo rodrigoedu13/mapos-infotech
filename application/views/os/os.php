@@ -142,7 +142,7 @@ if (!$results) { ?>
                     echo '<td>' . $dataInicial . '</td>';
                     echo '<td>' . $dataFinal . '</td>';
                     echo '<td>R$ ' . number_format($r->valorTotal, 2, ',', '.') . '</td>';
-                    echo '<td><span class="badge" style="background-color: ' . $cor . '; border-color: ' . $cor . '">' . $r->status . '</span> </td>';
+                    echo '<td><span class="badge" style="background-color: ' . $r->cor . '; border-color: ' . $r->cor . '">' . $r->idSituacao . '</span> </td>';
                     echo '<td>' . $faturado . '</td>';
                     echo '<td>';
                     if ($this->permission->checkPermission($this->session->userdata('permissao'), 'vOs')) {

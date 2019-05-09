@@ -18,9 +18,9 @@ class Situacoes_model extends CI_Model {
     }
 
     function getById($id) {
-        $this->db->where('idMarcas', $id);
+        $this->db->where('idSituacao', $id);
         $this->db->limit(1);
-        return $this->db->get('marcas')->row();
+        return $this->db->get('situacoes')->row();
     }
 
     function add($table, $data) {
@@ -58,13 +58,13 @@ class Situacoes_model extends CI_Model {
         return $this->db->get('os')->row();
     }
 
-    function getMarcasDropdown() {
-        $this->db->select('idMarcas,marca');
-        $this->db->order_by('marca');
-        $results = $this->db->get('marcas')->result();
+    function getSituacaoDropdown() {
+        $this->db->select('idSituacao');
+        $this->db->order_by('idSituacao');
+        $results = $this->db->get('situacoes')->result();
         $list = array();
         foreach ($results as $result) {
-            $list[$result->idMarcas] = $result->marca;
+            $list[$result->idSituacao] = $result->idSituacao;
         }
         return $list;
     }

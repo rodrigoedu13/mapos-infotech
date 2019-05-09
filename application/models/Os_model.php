@@ -17,6 +17,7 @@ class Os_model extends CI_Model {
         $this->db->select($fields.',clientes.nomeCliente');
         $this->db->from($table);
         $this->db->join('clientes','clientes.idClientes = os.clientes_id');
+        $this->db->join('situacoes','situacoes.idSituacao = os.status');
         $this->db->limit($perpage,$start);
         $this->db->order_by('idOs','desc');
         if($where){
@@ -52,6 +53,7 @@ class Os_model extends CI_Model {
         $this->db->from($table);
         $this->db->join('clientes','clientes.idClientes = os.clientes_id');
         $this->db->join('usuarios','usuarios.idUsuarios = os.usuarios_id','left');
+        $this->db->join('situacoes','situacoes.idSituacao = os.status','left');
 
         // condicionais da pesquisa
 

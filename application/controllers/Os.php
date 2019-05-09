@@ -78,7 +78,7 @@ class Os extends CI_Controller {
 
         $this->pagination->initialize($config);
 
-        $this->data['results'] = $this->os_model->getOs('os', 'idOs,dataInicial,dataFinal,valorTotal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico, faturado', $where_array, $config['per_page'], $this->uri->segment(3));
+        $this->data['results'] = $this->os_model->getOs('os', 'idOs,dataInicial,dataFinal,valorTotal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico, faturado, idSituacao, cor', $where_array, $config['per_page'], $this->uri->segment(3));
 
         $this->data['view'] = 'os/os';
         $this->load->view('tema/topo', $this->data);
@@ -97,6 +97,9 @@ class Os extends CI_Controller {
 
         $this->load->model('marcas_model');
         $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
+        
+        $this->load->model('situacoes_model');
+        $this->data['situacao'] = $this->situacoes_model->getSituacaoDropdown();
 
         $this->load->model('equipamentos_model');
         $this->data['equipamentos'] = $this->equipamentos_model->getEquipamentosDropdown();
@@ -203,6 +206,9 @@ class Os extends CI_Controller {
 
         $this->load->model('marcas_model');
         $this->data['marcas'] = $this->marcas_model->getMarcasDropdown();
+        
+         $this->load->model('situacoes_model');
+        $this->data['situacao'] = $this->situacoes_model->getSituacaoDropdown();
 
         $this->load->model('equipamentos_model');
         $this->data['equipamentos'] = $this->equipamentos_model->getEquipamentosDropdown();
