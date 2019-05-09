@@ -53,8 +53,8 @@ class Situacoes_model extends CI_Model {
         return FALSE;
     }
 
-    function getMarcasOs($id) {
-        $this->db->where('marcas_id', $id);
+    function getSituacaoOs($id) {
+        $this->db->where('status', $id);
         return $this->db->get('os')->row();
     }
 

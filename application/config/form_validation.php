@@ -300,6 +300,16 @@ $config = array('clientes' => array(array(
             'rules' => 'trim|required'
         ))
     ,
+    'situacoes' => array(array(
+            'field' => 'situacao',
+            'label' => 'Situação',
+            'rules' => 'required|trim'
+        )),
+    array(
+        'field' => 'cor',
+        'label' => 'Cor',
+        'rules' => 'trim|required'
+    ),
     'marcas' => array(array(
             'field' => 'marca',
             'label' => 'Marca',

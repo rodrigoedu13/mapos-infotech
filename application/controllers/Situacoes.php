@@ -41,20 +41,18 @@ class Situacoes extends CI_Controller {
         $this->load->library('form_validation');
         $this->data['custom_error'] = '';
 
-        if ($this->form_validation->run('marcas') == false) {
+        if ($this->form_validation->run('situacoes') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $dthora = date('Y-m-d H:i:s');
-            $situacao = 0;
             $data = array(
-                'marca' => set_value('marca'),
-                'cadastro' => $dthora,
-                'situacao' => $situacao,
+                'idSituacao' => set_value('situacao'),
+                'cor' => set_value('cor'),
+                'ativo' => 0,
             );
 
-            if ($this->marcas_model->add('marcas', $data) == TRUE) {
-                $this->session->set_flashdata('success', 'Marca cadastrada com sucesso!');
-                redirect(base_url() . 'index.php/marcas/adicionar/');
+            if ($this->situacoes_model->add('situacoes', $data) == TRUE) {
+                $this->session->set_flashdata('success', 'Situação cadastrada com sucesso!');
+                redirect(base_url() . 'index.php/situacoes/adicionar/');
             } else {
                 $this->data['custom_error'] = '<div class="form_error"><p>An Error Occured.</p></div>';
             }
@@ -113,16 +111,16 @@ class Situacoes extends CI_Controller {
         if ($id == null) {
 
             $this->session->set_flashdata('error', 'Erro ao tentar excluir produto.');
-            redirect(base_url() . 'index.php/marcas');
+            redirect(base_url() . 'index.php/situacoes');
         }
 
-        if ($this->marcas_model->getMarcasOs($id) == TRUE) {
-            $this->session->set_flashdata('error', 'Essa marca esta cadastrada em uma Os, não é possivel excluir!');
-            redirect(base_url() . 'index.php/marcas');
+        if ($this->situacoes_model->getSituacaoOs($id) == TRUE) {
+            $this->session->set_flashdata('error', 'Essa Situação esta cadastrada em uma Os, não é possivel excluir!');
+            redirect(base_url() . 'index.php/situacoes');
         } else {
-            $this->marcas_model->delete('marcas', 'idMarcas', $id);
-            $this->session->set_flashdata('success', 'Marca excluida com sucesso!');
-            redirect(base_url() . 'index.php/marcas');
+            $this->situacoes_model->delete('situacoes', 'idSituacao', $id);
+            $this->session->set_flashdata('success', 'Situação excluida com sucesso!');
+            redirect(base_url() . 'index.php/situacoes');
         }
     }
 

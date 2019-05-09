@@ -25,7 +25,7 @@
                         <label for="cor" class="control-label">Cor<span class="required">*</span></label>
                         <div class="controls">
                             <div data-color-format="hex" data-color="#000000"  class="input-append color colorpicker">
-                                <input  id="cor" type="text" value="#000000" class="span11">
+                                <input  id="cor" name="cor" type="text" value="#000000" class="span11">
                                 <span class="add-on"><i style="background-color: #000000"></i></span> 
                             </div>
                         </div>
@@ -55,6 +55,8 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".money").maskMoney();
+        
+        $('.colorpicker').colorpicker();
 
         $('#formMarca').validate({
             rules :{

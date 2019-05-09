@@ -20,6 +20,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Cor</th>
+                        <th>Ativo</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -52,33 +53,32 @@
                     <tr style="backgroud-color: #2D335B">
                         <th>Nome</th>
                         <th>Cor</th>
+                        <th>Ativo</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($results as $r) :
-                        $dataCadastro = date(('d/m/Y'),strtotime($r->cadastro));
-                        if ($r->situacao == 0){
-                            $situacao = 'Ativo';
-                        }elseif ($r->situacao == 1){
-                            $situacao = 'Inativo';
+                        if ($r->ativo == 0){
+                            $ativo = 'Sim';
+                        }else{
+                            $ativo = 'Não';
                         }
                         ?>
                         <tr>
-                            <td><?= $r->idMarcas; ?></td>
-                            <td><?= $r->marca; ?></td>
-                            <td><?= $dataCadastro; ?></td>
-                            <td><?= $situacao; ?></td>
+                            <td><?= $r->idSituacao; ?></td>
+                            <td style="background-color: <?= $r->cor; ?>; width: 5%;"></td>
+                            <td><?= $ativo; ?></td>
                             <td>
                                     <?php
                                 if ($this->permission->checkPermission($this->session->userdata('permissao'), 'eProduto')) {
                                     ?>
-                                    <a href="<?php echo base_url('index.php/marcas/editar/') . $r->idMarcas; ?>" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Marca"><i class="icon-pencil icon-white"></i></a>
+                                    <a href="<?php echo base_url('index.php/situacao/editar/') . $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Marca"><i class="icon-pencil icon-white"></i></a>
                                     <?php
                                 }
                                 if ($this->permission->checkPermission($this->session->userdata('permissao'), 'dProduto')) {
                                     ?>
-                                    <a href="#modal-excluir" role="button" data-toggle="modal" marca="<?= $r->idMarcas; ?>" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Marca"><i class="icon-remove icon-white"></i></a>
+                                    <a href="#modal-excluir" role="button" data-toggle="modal" situacao="<?= $r->idSituacao; ?>" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Marca"><i class="icon-remove icon-white"></i></a>
                                 <?php } ?>
                             </td>
                         </tr> 
@@ -93,14 +93,14 @@
 
 <!-- Modal -->
 <div id="modal-excluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <form action="<?php echo base_url() ?>index.php/marcas/excluir" method="post" >
+    <form action="<?php echo base_url() ?>index.php/situacoes/excluir" method="post" >
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h5 id="myModalLabel">Excluir Marca</h5>
         </div>
         <div class="modal-body">
-            <input type="hidden" id="idMarcas" name="id" value="" />
-            <h5 style="text-align: center">Deseja realmente excluir esta marca?</h5>
+            <input type="hidden" id="idSituacao" name="id" value="" />
+            <h5 style="text-align: center">Deseja realmente excluir esta Situacao?</h5>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
@@ -132,8 +132,8 @@
 
         $(document).on('click', 'a', function (event) {
 
-            var marca = $(this).attr('marca');
-            $('#idMarcas').val(marca);
+            var situacao = $(this).attr('situacao');
+            $('#idSituacao').val(situacao);
 
         });
 
