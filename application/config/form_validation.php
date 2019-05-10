@@ -303,7 +303,7 @@ $config = array('clientes' => array(array(
     'situacoes' => array(array(
             'field' => 'situacao',
             'label' => 'Situação',
-            'rules' => 'required|trim'
+            'rules' => 'required|trim|is_unique[situacoes.idSituacao]'
         )),
     array(
         'field' => 'cor',
