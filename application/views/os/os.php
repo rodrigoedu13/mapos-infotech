@@ -15,8 +15,11 @@
         </div>
         <div class="span2">
             <?php 
+             $js = array(
+                'class' => 'span12'
+            );
             $options = array ('0' => 'Selecione uma Situação') + $situacao;
-            echo form_dropdown($name = 'status', $options); ?>
+            echo form_dropdown($name = 'status', $options,'',$js); ?>
 
         </div>
 

@@ -63,7 +63,12 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <div class="span3" >
                                             <label for="status">Situação<span class="required">*</span></label>
-                                            <?php echo form_dropdown($name = 'status', $options = $situacao); ?>
+                                            <?php 
+                                            $js = array(
+                                                'class' => 'span12'
+                                            );
+                                            $options = array('0' => 'Selecione a situação') + $situacao;
+                                            echo form_dropdown($name = 'status', $options,'',$js); ?>
                                         </div>
 <!--                                        <div class="span3">
                                             <label for="status">Status<span class="required">*</span></label>
@@ -102,14 +107,20 @@
 
                                 <div class="span3">
                                     <label for="Equipamento">Equipamento<span class="required">*</span></label>
-                                    <?php echo form_dropdown($name = 'equipamento', $options = $equipamentos); ?>
+                                    <?php 
+                                    $js = array(
+                                            'class' => 'span12'
+                                        );
+                                    $options = array ('0' => 'Selecione o equipamento') + $equipamentos;
+                                    echo form_dropdown($name = 'equipamento', $options,'',$js); ?>
                                 </div>
                                 <div class="span3">
                                     <label for="Marca">Marca<span class="required">*</span></label>
                                     <div >
                                         <?php
                                         $js = array(
-                                            'id' => 'marcas'
+                                            'id' => 'marcas',
+                                            'class' => 'span12'
                                         );
                                         $options = array ('0' => 'Selecione uma Marca') + $marcas;
                                         echo form_dropdown('marca', $options, 0, $js);
