@@ -79,7 +79,11 @@ class Os extends CI_Controller {
         $this->pagination->initialize($config);
 
         $this->data['results'] = $this->os_model->getOs('os', 'idOs,dataInicial,dataFinal,valorTotal,garantia,descricaoProduto,defeito,status,observacoes,laudoTecnico, faturado, idSituacao, cor', $where_array, $config['per_page'], $this->uri->segment(3));
-
+        
+        
+        $this->load->model('situacoes_model');
+        $this->data['situacao'] = $this->situacoes_model->getSituacaoDropdown();
+        
         $this->data['view'] = 'os/os';
         $this->load->view('tema/topo', $this->data);
     }

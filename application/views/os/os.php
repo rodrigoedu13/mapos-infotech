@@ -14,16 +14,9 @@
             <input type="text" name="pesquisa" id="pesquisa" placeholder="Nome do cliente a pesquisar" class="span12" value="">
         </div>
         <div class="span2">
-            <select name="status" id="status" class="span12">
-                <option value="">Selecione status</option>
-                <option value="Aberto">Aberto</option>
-                <option value="Faturado">Faturado</option>
-                <option value="Em Andamento">Em Andamento</option>
-                <option value="Orçamento">Orçamento</option>
-                <option value="Finalizado">Finalizado</option>
-                <option value="Cancelado">Cancelado</option>
-                <option value="Aguardando Peças">Aguardando Peças</option>
-            </select>
+            <?php 
+            $options = array ('0' => 'Selecione uma Situação') + $situacao;
+            echo form_dropdown($name = 'status', $options); ?>
 
         </div>
 
@@ -109,32 +102,7 @@ if (!$results) { ?>
                     }else{
                         $faturado = 'Não';
                     }
-                    switch ($r->status) {
-                case 'Aberto':
-                    $cor = '#00cd00';
-                    break;
-                case 'Em Andamento':
-                    $cor = '#436eee';
-                    break;
-                case 'Orçamento':
-                    $cor = '#CDB380';
-                    break;
-                case 'Cancelado':
-                    $cor = '#CD0000';
-                    break;
-                case 'Finalizado':
-                    $cor = '#00CD00';
-                    break;
-                case 'Faturado':
-                    $cor = '#B266FF';
-                    break;
-                case 'Aguardando Peças':
-                    $cor = '#FF7F00';
-                    break;
-                default:
-                    $cor = '#E0E4CC';
-                    break;
-            }
+                   
                     echo '<tr>';
                     echo '<td>' . $r->idOs . '</td>';
                     echo '<td>' . $r->nomeCliente . '</td>';
