@@ -196,7 +196,7 @@ if(!$results){?>
             if ($r->baixado == 0){
                echo ' <li><a href="#modalConfPagamento" data-toggle="modal" role="button" class="confirmar" idLancamento="'.$r->idLancamentos.'" valor="'. $r->valor.'" dtPagamento="'.$pagamento.'" formaPgto="'.$r->forma_pgto.'"><i class="icon-ok"></i>Confirmar Pagamento</a></li>';
             }else{
-                echo '<li><a href="#modalCancPagamento"><i class="icon-remove"></i>Cancelar pagamento</a></li>';
+                echo '<li><a href="#modalCancPagamento" data-toggle="modal" role="button" class="cancelar" idLancamento="'.$r->idLancamentos.'" valor="'. $r->valor.'" dtPagamento="'.$pagamento.'" formaPgto="'.$r->forma_pgto.'"><i class="icon-remove"></i>Cancelar pagamento</a></li>';
             }
              echo '   <li><a href="#"><i class="icon-print"></i>Imprimir</a></li>
                 
@@ -251,6 +251,45 @@ if(!$results){?>
         </div>
         
         
+      </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnCancelarEditar">Cancelar</button>
+    <button class="btn btn-primary">Confirmar</button>
+  </div>
+  </form>
+</div>
+
+<!-- Modal cancelar Pagamento -->
+<div id="modalCancPagamento" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form id="formConcPagamento" action="<?php echo base_url() ?>index.php/financeiro/cancelarPagamento" method="post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Concelar Pagamento</h3>
+  </div>
+  <div class="modal-body">
+      
+
+      <div class="span12" style="margin-left: 0"> 
+          <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Valor</th>
+                  <th>Data do pagamento</th>
+                  <th>Forma de Pagamento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td><p id="valorConf"></p></td>
+                  <td>as</td>
+                  <td>Win 95+</td>
+                </tr>
+
+              </tbody>
+            </table>
+
       </div>
 
   </div>
@@ -344,6 +383,16 @@ if(!$results){?>
 
 
     $(document).on('click', '.confirmar', function(event) {
+      $("#idConf").val($(this).attr('idLancamento'));
+      $("#valorConf").val($(this).attr('valor'));
+      $("#dtPagamentoConf").val($(this).attr('dtPagamento'));
+      $("#formaPgto").val($(this).attr('formaPgto')); 
+      $("#urlAtual").val($(location).attr('href'));
+      
+
+    });
+    
+    $(document).on('click', '.cancelar', function(event) {
       $("#idConf").val($(this).attr('idLancamento'));
       $("#valorConf").val($(this).attr('valor'));
       $("#dtPagamentoConf").val($(this).attr('dtPagamento'));
