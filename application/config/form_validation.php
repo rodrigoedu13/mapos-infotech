@@ -284,6 +284,18 @@ $config = array('clientes' => array(array(
         ),
         )
     ,
+    'compras' => array(
+        array(
+            'field' => 'fornecedor_id',
+            'label' => 'Fornecedor',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'dtEmissao',
+            'label' => 'Data Emissão',
+            'rules' => 'required|trim'
+        ))
+    ,
     'vendas' => array(array(
             'field' => 'dataVenda',
             'label' => 'Data da Venda',
